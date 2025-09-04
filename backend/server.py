@@ -553,10 +553,6 @@ async def get_training_categories():
             "name": "Situative Bausteine",
             "color": "#60A5FA",
             "sections": {
-                "fahrerassistenzsysteme": {
-                    "name": "Fahrerassistenzsysteme",
-                    "items": ["Bedienung der Fahrerassistenzsysteme"]
-                },
                 "fahrtechnische_vorbereitung": {
                     "name": "Checkliste zur fahrtechnischen Vorbereitung",
                     "sections": {
