@@ -1188,6 +1188,96 @@
             updateCategoryProgress(categoryKey, studentId);
         }
 
+        // Neuer Fahrschüler Dialog
+        function showNewStudentDialog() {
+            const dialog = document.createElement('div');
+            dialog.className = 'dialog-overlay';
+            dialog.innerHTML = `
+                <div class="dialog">
+                    <h2>Neuer Fahrschüler</h2>
+                    <div class="form-group">
+                        <label>Vorname *</label>
+                        <input type="text" id="new-name" placeholder="z.B. Max" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nachname *</label>
+                        <input type="text" id="new-surname" placeholder="z.B. Mustermann" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Geburtsdatum</label>
+                        <input type="date" id="new-birth">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefon</label>
+                        <input type="tel" id="new-phone" placeholder="+49 123 456789">
+                    </div>
+                    <div class="form-group">
+                        <label>Adresse</label>
+                        <input type="text" id="new-address" placeholder="Straße, PLZ Ort">
+                    </div>
+                    <div class="form-group">
+                        <label>Ausbildungsbeginn</label>
+                        <input type="date" id="new-start" value="${new Date().toISOString().split('T')[0]}">
+                    </div>
+                    <div class="dialog-buttons">
+                        <button class="btn-secondary" onclick="closeNewStudentDialog()">Abbrechen</button>
+                        <button class="btn-primary" onclick="createNewStudent()">Erstellen</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(dialog);
+        }
+
+        function closeNewStudentDialog() {
+            const dialog = document.querySelector('.dialog-overlay');
+            if (dialog) dialog.remove();
+        }
+
+        function createNewStudent() {
+            const name = document.getElementById('new-name').value.trim();
+            const surname = document.getElementById('new-surname').value.trim();
+            
+            if (!name || !surname) {
+                alert('Bitte Vor- und Nachname eingeben!');
+                return;
+            }
+            
+            const newStudent = {
+                id: 'student-' + Date.now(),
+                name: name,
+                surname: surname,
+                date_of_birth: document.getElementById('new-birth').value || null,
+                phone: document.getElementById('new-phone').value.trim() || null,
+                address: document.getElementById('new-address').value.trim() || null,
+                start_date: document.getElementById('new-start').value || new Date().toISOString().split('T')[0],
+                theory_exam_date: null,
+                practical_exam_date: null,
+                theory_exam_passed: false,
+                practical_exam_passed: false,
+                wears_glasses: null,
+                ueberlandfahrten: [false, false, false, false, false],
+                autobahnfahrten: [false, false, false, false],
+                nachtfahrten: [false, false, false],
+                uebungsfahrten_ganz: [],
+                uebungsfahrten_halb: [],
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString()
+            };
+            
+            const students = StorageManager.getStudents();
+            students.push(newStudent);
+            StorageManager.saveStudents(students);
+            
+            closeNewStudentDialog();
+            renderStudentList();
+            
+            // Erfolgsmeldung
+            setTimeout(() => {
+                alert(`${name} ${surname} wurde erfolgreich hinzugefügt!`);
+            }, 100);
+        }
+
         function showAlert(message) {
             alert(message);
         }
