@@ -652,8 +652,10 @@ class BackendTester:
             response = requests.get(f"{BASE_URL}/students/{practice_student_id}")
             if response.status_code == 200:
                 final_student = response.json()
-                final_ganz_count = len(final_student['uebungsfahrten_ganz'])
-                final_halb_count = len(final_student['uebungsfahrten_halb'])
+                final_ganz_array = final_student['uebungsfahrten_ganz'] or []
+                final_halb_array = final_student['uebungsfahrten_halb'] or []
+                final_ganz_count = len(final_ganz_array)
+                final_halb_count = len(final_halb_array)
                 
                 # Should have 7 full hours (8 added - 1 removed) and 3 half hours (4 added - 1 removed)
                 expected_ganz = 7
