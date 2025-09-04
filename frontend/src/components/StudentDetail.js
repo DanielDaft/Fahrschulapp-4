@@ -136,7 +136,7 @@ const StudentDetail = ({ student, onBack, onEdit }) => {
           {studentData.date_of_birth && (
             <div className="flex items-center gap-2 text-gray-600">
               <Calendar size={16} />
-              <span>Geburtsdatum: {studentData.date_of_birth}</span>
+              <span>Geburtsdatum: {formatGermanDate(studentData.date_of_birth)}</span>
             </div>
           )}
           {studentData.phone && (
