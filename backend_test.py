@@ -732,6 +732,7 @@ class BackendTester:
         self.test_progress_tracking()
         self.test_notes_system()
         self.test_training_categories()
+        self.test_practice_hours_functionality()  # NEW: Test enhanced practice hours
         self.test_data_persistence()
         self.test_cascading_deletes()
         self.test_error_handling()
