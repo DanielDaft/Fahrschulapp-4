@@ -307,16 +307,17 @@ const StudentDetail = ({ student, onBack, onEdit }) => {
                       </button>
                     </div>
                   ))}
-                  {/* VERY VISIBLE + button */}
-                  <button
-                    onClick={() => addUebungsfahrt('uebungsfahrten_ganz', 1.0)}
-                    className="w-12 h-12 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors flex items-center justify-center font-bold text-2xl border-4 border-blue-800 shadow-lg"
-                    title="Ganze Stunde hinzufügen"
-                    style={{backgroundColor: '#1E40AF', border: '3px solid #1E3A8A'}}
-                  >
+                  
+                  {/* ADD BUTTON - BIG AND OBVIOUS */}
+                  <div style={{backgroundColor: '#1E40AF', border: '4px solid #1E3A8A', borderRadius: '50%', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '24px', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 8px rgba(0,0,0,0.3)'}} 
+                       onClick={() => addUebungsfahrt('uebungsfahrten_ganz', 1.0)}
+                       title="Ganze Stunde hinzufügen">
                     +
-                  </button>
+                  </div>
                 </div>
+                <span className="ml-2 text-sm text-gray-600">
+                  ({(studentData.uebungsfahrten_ganz || []).filter(Boolean).length}/{(studentData.uebungsfahrten_ganz || []).length})
+                </span>
               </div>
               
               {/* Halbe Stunden - Always show */}
@@ -345,16 +346,17 @@ const StudentDetail = ({ student, onBack, onEdit }) => {
                       </button>
                     </div>
                   ))}
-                  {/* VERY VISIBLE + button */}
-                  <button
-                    onClick={() => addUebungsfahrt('uebungsfahrten_halb', 0.5)}
-                    className="w-12 h-12 rounded-full bg-green-600 text-white hover:bg-green-700 transition-colors flex items-center justify-center font-bold text-2xl border-4 border-green-800 shadow-lg"
-                    title="Halbe Stunde hinzufügen"
-                    style={{backgroundColor: '#059669', border: '3px solid #065F46'}}
-                  >
+                  
+                  {/* ADD BUTTON - BIG AND OBVIOUS */}
+                  <div style={{backgroundColor: '#059669', border: '4px solid #065F46', borderRadius: '50%', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '24px', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 8px rgba(0,0,0,0.3)'}} 
+                       onClick={() => addUebungsfahrt('uebungsfahrten_halb', 0.5)}
+                       title="Halbe Stunde hinzufügen">
                     +
-                  </button>
+                  </div>
                 </div>
+                <span className="ml-2 text-sm text-gray-600">
+                  ({(studentData.uebungsfahrten_halb || []).filter(Boolean).length}/{(studentData.uebungsfahrten_halb || []).length})
+                </span>
               </div>
             </div>
           </div>
