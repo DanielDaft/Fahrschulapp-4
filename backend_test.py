@@ -583,7 +583,8 @@ class BackendTester:
                 )
                 if response.status_code == 200:
                     updated_student = response.json()
-                    new_ganz_count = len(updated_student['uebungsfahrten_ganz'])
+                    new_ganz_array = updated_student['uebungsfahrten_ganz'] or []
+                    new_ganz_count = len(new_ganz_array)
                     if new_ganz_count == initial_ganz_count - 1:
                         self.log_test("Remove Full Hour", True, f"Successfully removed full hour, count: {initial_ganz_count} -> {new_ganz_count}")
                     else:
@@ -598,7 +599,8 @@ class BackendTester:
                 )
                 if response.status_code == 200:
                     updated_student = response.json()
-                    new_halb_count = len(updated_student['uebungsfahrten_halb'])
+                    new_halb_array = updated_student['uebungsfahrten_halb'] or []
+                    new_halb_count = len(new_halb_array)
                     if new_halb_count == initial_halb_count - 1:
                         self.log_test("Remove Half Hour", True, f"Successfully removed half hour, count: {initial_halb_count} -> {new_halb_count}")
                     else:
