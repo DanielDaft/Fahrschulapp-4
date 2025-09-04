@@ -170,7 +170,7 @@ const StudentDetail = ({ student, onBack, onEdit }) => {
               <div className={`w-3 h-3 rounded-full ${studentData.theory_exam_passed ? 'bg-green-500' : 'bg-yellow-500'}`}></div>
               <span>
                 Theorieprüfung: {studentData.theory_exam_passed ? 'Bestanden' : 'Geplant'}
-                {studentData.theory_exam_date && ` (${studentData.theory_exam_date})`}
+                {studentData.theory_exam_date && ` (${formatGermanDate(studentData.theory_exam_date)})`}
               </span>
             </div>
           )}
