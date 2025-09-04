@@ -571,8 +571,10 @@ class BackendTester:
             response = requests.get(f"{BASE_URL}/students/{practice_student_id}")
             if response.status_code == 200:
                 current_student = response.json()
-                initial_ganz_count = len(current_student['uebungsfahrten_ganz'])
-                initial_halb_count = len(current_student['uebungsfahrten_halb'])
+                initial_ganz_array = current_student['uebungsfahrten_ganz'] or []
+                initial_halb_array = current_student['uebungsfahrten_halb'] or []
+                initial_ganz_count = len(initial_ganz_array)
+                initial_halb_count = len(initial_halb_array)
                 
                 # Remove a full hour (index 0)
                 response = requests.delete(
