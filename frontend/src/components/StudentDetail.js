@@ -307,11 +307,12 @@ const StudentDetail = ({ student, onBack, onEdit }) => {
                       </button>
                     </div>
                   ))}
-                  {/* ALWAYS show + button */}
+                  {/* VERY VISIBLE + button */}
                   <button
                     onClick={() => addUebungsfahrt('uebungsfahrten_ganz', 1.0)}
-                    className="w-8 h-8 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors flex items-center justify-center font-bold text-lg"
+                    className="w-12 h-12 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors flex items-center justify-center font-bold text-2xl border-4 border-blue-800 shadow-lg"
                     title="Ganze Stunde hinzufügen"
+                    style={{backgroundColor: '#1E40AF', border: '3px solid #1E3A8A'}}
                   >
                     +
                   </button>
