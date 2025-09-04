@@ -588,6 +588,16 @@ async def get_training_categories():
                 }
             }
         },
+        "fahrerassistenzsysteme": {
+            "name": "Fahrerassistenzsysteme",
+            "color": "#60A5FA",
+            "sections": {
+                "bedienung": {
+                    "name": "Bedienung der Fahrerassistenzsysteme",
+                    "items": ["Bedienung der Fahrerassistenzsysteme"]
+                }
+            }
+        },
         "beim_fahrer": {
             "name": "Beim Fahrer (vor Fahrtbeginn)",
             "subtitle": "Richtige Sitzeinstellung",
