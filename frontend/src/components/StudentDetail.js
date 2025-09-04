@@ -378,18 +378,59 @@ const StudentDetail = ({ student, onBack, onEdit }) => {
       <div className="space-y-4">
         <h2 className="text-xl font-bold text-gray-800 mb-4">Ausbildungsfortschritt</h2>
         
-        {trainingCategories && Object.entries(trainingCategories).map(([key, category]) => (
-          <TrainingSection
-            key={key}
-            categoryKey={key}
-            title={category.name}
-            subtitle={category.subtitle}
-            color={category.color}
-            sections={category.sections}
-            studentId={student.id}
-            collapsed={key !== 'grundstufe'} // Only Grundstufe expanded by default
-          />
-        ))}
+        {trainingCategories && Object.entries(trainingCategories).map(([key, category]) => {
+          // Filter out fahrerassistenzsysteme from situative_bausteine
+          if (key === 'situative_bausteine') {
+            const filteredSections = { ...category.sections };
+            delete filteredSections.fahrerassistenzsysteme;
+            
+            return (
+              <div key={key}>
+                {/* Original Situative Bausteine without Fahrerassistenzsysteme */}
+                <TrainingSection
+                  key={key}
+                  categoryKey={key}
+                  title={category.name}
+                  subtitle={category.subtitle}
+                  color={category.color}
+                  sections={filteredSections}
+                  studentId={student.id}
+                  collapsed={key !== 'grundstufe'}
+                />
+                
+                {/* Separate Fahrerassistenzsysteme category */}
+                {category.sections.fahrerassistenzsysteme && (
+                  <TrainingSection
+                    key="fahrerassistenzsysteme_separate"
+                    categoryKey="situative_bausteine" // Keep same category for data consistency
+                    title="Fahrerassistenzsysteme"
+                    subtitle=""
+                    color="#60A5FA" // Same blue color as situative_bausteine
+                    sections={{
+                      fahrerassistenzsysteme: category.sections.fahrerassistenzsysteme
+                    }}
+                    studentId={student.id}
+                    collapsed={true}
+                  />
+                )}
+              </div>
+            );
+          }
+          
+          // All other categories remain unchanged
+          return (
+            <TrainingSection
+              key={key}
+              categoryKey={key}
+              title={category.name}
+              subtitle={category.subtitle}
+              color={category.color}
+              sections={category.sections}
+              studentId={student.id}
+              collapsed={key !== 'grundstufe'}
+            />
+          );
+        })}
       </div>
     </div>
   );
