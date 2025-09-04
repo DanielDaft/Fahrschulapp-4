@@ -1882,6 +1882,86 @@
             alert(message);
         }
 
+        // SCHÜLER BEARBEITEN FUNKTION
+        function showEditStudentDialog(studentId) {
+            const student = StorageManager.getStudentById(studentId);
+            if (!student) return;
+            
+            const dialogHtml = `
+                <div class="dialog-overlay" onclick="closeEditDialog(event)">
+                    <div class="dialog" onclick="event.stopPropagation()">
+                        <h2>Schüler bearbeiten</h2>
+                        <form onsubmit="updateStudent(event, '${studentId}')">
+                            <div class="form-group">
+                                <label for="edit-name">Vorname *</label>
+                                <input type="text" id="edit-name" value="${student.name}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-surname">Nachname *</label>
+                                <input type="text" id="edit-surname" value="${student.surname}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-phone">Telefon</label>
+                                <input type="tel" id="edit-phone" value="${student.phone || ''}" placeholder="01234567890">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-address">Adresse</label>
+                                <input type="text" id="edit-address" value="${student.address || ''}" placeholder="Straße, PLZ Ort">
+                            </div>
+                            <div class="dialog-buttons">
+                                <button type="button" class="btn-secondary" onclick="closeEditDialog()">Abbrechen</button>
+                                <button type="submit" class="btn-primary">Speichern</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', dialogHtml);
+        }
+
+        function closeEditDialog(event) {
+            if (event && event.target !== event.currentTarget) return;
+            const dialog = document.querySelector('.dialog-overlay');
+            if (dialog) dialog.remove();
+        }
+
+        function updateStudent(event, studentId) {
+            event.preventDefault();
+            
+            const name = document.getElementById('edit-name').value.trim();
+            const surname = document.getElementById('edit-surname').value.trim();
+            const phone = document.getElementById('edit-phone').value.trim();
+            const address = document.getElementById('edit-address').value.trim();
+            
+            if (!name || !surname) {
+                alert('❌ Vor- und Nachname sind erforderlich!');
+                return;
+            }
+            
+            const student = StorageManager.getStudentById(studentId);
+            const updatedStudent = {
+                ...student,
+                name,
+                surname,
+                phone: phone || null,
+                address: address || null,
+                updated_at: new Date().toISOString()
+            };
+            
+            StorageManager.updateStudent(updatedStudent);
+            closeEditDialog();
+            
+            // Ansicht aktualisieren
+            if (currentView === 'detail') {
+                renderStudentDetail(studentId);
+            } else {
+                renderStudentList();
+            }
+            
+            alert(`✅ ${name} ${surname} wurde erfolgreich aktualisiert!`);
+        }
+
         // App Initialization
         function initApp() {
             try {
