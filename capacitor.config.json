@@ -1,5 +1,22 @@
 {
   "appId": "com.fahrschule.app",
   "appName": "Deutsche Fahrschul-App",
-  "webDir": "www"
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "ios": {
+    "contentInset": "automatic",
+    "allowsLinkPreview": false,
+    "presentationStyle": "fullscreen",
+    "scheme": "Deutsche Fahrschul-App"
+  },
+  "plugins": {
+    "Preferences": {
+      "iosUseKeychainForEncryption": true
+    },
+    "StatusBar": {
+      "style": "dark"
+    }
+  }
 }
