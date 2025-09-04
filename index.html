@@ -1825,6 +1825,32 @@
                         <label>Ausbildungsbeginn</label>
                         <input type="date" id="new-start" value="${new Date().toISOString().split('T')[0]}">
                     </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="new-glasses" style="margin-right: 8px;">
+                            Brillenträger
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>Theorieprüfung Datum</label>
+                        <input type="date" id="new-theory-date">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="new-theory-passed" style="margin-right: 8px;">
+                            Theorieprüfung bestanden
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>Praktische Prüfung Datum</label>
+                        <input type="date" id="new-practical-date">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="new-practical-passed" style="margin-right: 8px;">
+                            Praktische Prüfung bestanden
+                        </label>
+                    </div>
                     <div class="dialog-buttons">
                         <button class="btn-secondary" onclick="closeNewStudentDialog()">Abbrechen</button>
                         <button class="btn-primary" onclick="createNewStudent()">Erstellen</button>
