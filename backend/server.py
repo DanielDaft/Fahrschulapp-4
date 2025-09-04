@@ -53,8 +53,8 @@ class Student(BaseModel):
     ueberlandfahrten: Optional[List[bool]] = Field(default_factory=lambda: [False] * 5)
     autobahnfahrten: Optional[List[bool]] = Field(default_factory=lambda: [False] * 4)
     nachtfahrten: Optional[List[bool]] = Field(default_factory=lambda: [False] * 3)
-    uebungsfahrten_ganz: Optional[List[bool]] = Field(default_factory=lambda: [False] * 5)  # Ganze Stunden
-    uebungsfahrten_halb: Optional[List[bool]] = Field(default_factory=lambda: [False] * 5)  # Halbe Stunden
+    uebungsfahrten_ganz: Optional[List[bool]] = Field(default_factory=list)  # Ganze Stunden - unlimited
+    uebungsfahrten_halb: Optional[List[bool]] = Field(default_factory=list)  # Halbe Stunden - unlimited
     start_date: datetime = Field(default_factory=datetime.utcnow)
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
