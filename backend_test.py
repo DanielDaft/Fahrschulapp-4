@@ -465,6 +465,209 @@ class BackendTester:
         
         return True
     
+    def test_practice_hours_functionality(self):
+        """Test the new enhanced practice hours functionality"""
+        print("\n=== TESTING PRACTICE HOURS FUNCTIONALITY ===")
+        
+        # Create a new student for practice hours testing
+        student_data = {
+            "name": "Anna",
+            "surname": "Übungsfahrten",
+            "date_of_birth": "1998-03-20",
+            "address": "Fahrschulstraße 456, 10115 Berlin",
+            "phone": "+49 30 98765432"
+        }
+        
+        try:
+            response = requests.post(f"{BASE_URL}/students", json=student_data)
+            if response.status_code == 200:
+                student = response.json()
+                practice_student_id = student['id']
+                self.log_test("Create Practice Hours Test Student", True, f"Created student with ID: {practice_student_id}")
+                
+                # Verify initial practice hours arrays are empty
+                if 'uebungsfahrten_ganz' in student and 'uebungsfahrten_halb' in student:
+                    ganz_count = len(student['uebungsfahrten_ganz'])
+                    halb_count = len(student['uebungsfahrten_halb'])
+                    if ganz_count == 0 and halb_count == 0:
+                        self.log_test("Initial Practice Hours State", True, "Practice hours arrays initialized as empty")
+                    else:
+                        self.log_test("Initial Practice Hours State", False, f"Expected empty arrays, got ganz:{ganz_count}, halb:{halb_count}")
+                else:
+                    self.log_test("Initial Practice Hours State", False, "Practice hours fields missing from student")
+            else:
+                self.log_test("Create Practice Hours Test Student", False, f"Status: {response.status_code}")
+                return False
+        except Exception as e:
+            self.log_test("Create Practice Hours Test Student", False, f"Exception: {str(e)}")
+            return False
+        
+        # Test 1: Add Full Hours (ganze Stunden)
+        for i in range(3):  # Add 3 full hours
+            try:
+                response = requests.post(
+                    f"{BASE_URL}/students/{practice_student_id}/practice-hours",
+                    params={"hour_type": "ganz", "duration": 1.0}
+                )
+                if response.status_code == 200:
+                    updated_student = response.json()
+                    ganz_count = len(updated_student['uebungsfahrten_ganz'])
+                    if ganz_count == i + 1:
+                        self.log_test(f"Add Full Hour #{i+1}", True, f"Successfully added full hour, total: {ganz_count}")
+                    else:
+                        self.log_test(f"Add Full Hour #{i+1}", False, f"Expected {i+1} hours, got {ganz_count}")
+                else:
+                    self.log_test(f"Add Full Hour #{i+1}", False, f"Status: {response.status_code}")
+            except Exception as e:
+                self.log_test(f"Add Full Hour #{i+1}", False, f"Exception: {str(e)}")
+        
+        # Test 2: Add Half Hours (halbe Stunden)
+        for i in range(4):  # Add 4 half hours
+            try:
+                response = requests.post(
+                    f"{BASE_URL}/students/{practice_student_id}/practice-hours",
+                    params={"hour_type": "halb", "duration": 0.5}
+                )
+                if response.status_code == 200:
+                    updated_student = response.json()
+                    halb_count = len(updated_student['uebungsfahrten_halb'])
+                    if halb_count == i + 1:
+                        self.log_test(f"Add Half Hour #{i+1}", True, f"Successfully added half hour, total: {halb_count}")
+                    else:
+                        self.log_test(f"Add Half Hour #{i+1}", False, f"Expected {i+1} hours, got {halb_count}")
+                else:
+                    self.log_test(f"Add Half Hour #{i+1}", False, f"Status: {response.status_code}")
+            except Exception as e:
+                self.log_test(f"Add Half Hour #{i+1}", False, f"Exception: {str(e)}")
+        
+        # Test 3: Verify Unlimited Hours (add more than 5 total)
+        for i in range(5):  # Add 5 more full hours to exceed old limit
+            try:
+                response = requests.post(
+                    f"{BASE_URL}/students/{practice_student_id}/practice-hours",
+                    params={"hour_type": "ganz", "duration": 1.0}
+                )
+                if response.status_code == 200:
+                    updated_student = response.json()
+                    ganz_count = len(updated_student['uebungsfahrten_ganz'])
+                    expected_count = 3 + i + 1  # 3 from before + current additions
+                    if ganz_count == expected_count:
+                        self.log_test(f"Unlimited Hours Test #{i+1}", True, f"Successfully added hour {expected_count}, no limit enforced")
+                    else:
+                        self.log_test(f"Unlimited Hours Test #{i+1}", False, f"Expected {expected_count} hours, got {ganz_count}")
+                else:
+                    self.log_test(f"Unlimited Hours Test #{i+1}", False, f"Status: {response.status_code}")
+            except Exception as e:
+                self.log_test(f"Unlimited Hours Test #{i+1}", False, f"Exception: {str(e)}")
+        
+        # Test 4: Remove Practice Hours
+        try:
+            # Get current state
+            response = requests.get(f"{BASE_URL}/students/{practice_student_id}")
+            if response.status_code == 200:
+                current_student = response.json()
+                initial_ganz_count = len(current_student['uebungsfahrten_ganz'])
+                initial_halb_count = len(current_student['uebungsfahrten_halb'])
+                
+                # Remove a full hour (index 0)
+                response = requests.delete(
+                    f"{BASE_URL}/students/{practice_student_id}/practice-hours",
+                    params={"hour_type": "ganz", "index": 0}
+                )
+                if response.status_code == 200:
+                    updated_student = response.json()
+                    new_ganz_count = len(updated_student['uebungsfahrten_ganz'])
+                    if new_ganz_count == initial_ganz_count - 1:
+                        self.log_test("Remove Full Hour", True, f"Successfully removed full hour, count: {initial_ganz_count} -> {new_ganz_count}")
+                    else:
+                        self.log_test("Remove Full Hour", False, f"Expected {initial_ganz_count - 1} hours, got {new_ganz_count}")
+                else:
+                    self.log_test("Remove Full Hour", False, f"Status: {response.status_code}")
+                
+                # Remove a half hour (index 0)
+                response = requests.delete(
+                    f"{BASE_URL}/students/{practice_student_id}/practice-hours",
+                    params={"hour_type": "halb", "index": 0}
+                )
+                if response.status_code == 200:
+                    updated_student = response.json()
+                    new_halb_count = len(updated_student['uebungsfahrten_halb'])
+                    if new_halb_count == initial_halb_count - 1:
+                        self.log_test("Remove Half Hour", True, f"Successfully removed half hour, count: {initial_halb_count} -> {new_halb_count}")
+                    else:
+                        self.log_test("Remove Half Hour", False, f"Expected {initial_halb_count - 1} hours, got {new_halb_count}")
+                else:
+                    self.log_test("Remove Half Hour", False, f"Status: {response.status_code}")
+            else:
+                self.log_test("Get Student for Remove Test", False, f"Status: {response.status_code}")
+        except Exception as e:
+            self.log_test("Remove Practice Hours", False, f"Exception: {str(e)}")
+        
+        # Test 5: Error Handling for Practice Hours
+        try:
+            # Test invalid hour type
+            response = requests.post(
+                f"{BASE_URL}/students/{practice_student_id}/practice-hours",
+                params={"hour_type": "invalid", "duration": 1.0}
+            )
+            if response.status_code == 400:
+                self.log_test("Invalid Hour Type Error", True, "Correctly rejected invalid hour type")
+            else:
+                self.log_test("Invalid Hour Type Error", False, f"Expected 400, got {response.status_code}")
+            
+            # Test invalid duration
+            response = requests.post(
+                f"{BASE_URL}/students/{practice_student_id}/practice-hours",
+                params={"hour_type": "ganz", "duration": 2.0}
+            )
+            if response.status_code == 400:
+                self.log_test("Invalid Duration Error", True, "Correctly rejected invalid duration")
+            else:
+                self.log_test("Invalid Duration Error", False, f"Expected 400, got {response.status_code}")
+            
+            # Test invalid index for removal
+            response = requests.delete(
+                f"{BASE_URL}/students/{practice_student_id}/practice-hours",
+                params={"hour_type": "ganz", "index": 999}
+            )
+            if response.status_code == 400:
+                self.log_test("Invalid Index Error", True, "Correctly rejected invalid index")
+            else:
+                self.log_test("Invalid Index Error", False, f"Expected 400, got {response.status_code}")
+                
+        except Exception as e:
+            self.log_test("Practice Hours Error Handling", False, f"Exception: {str(e)}")
+        
+        # Test 6: Verify Final State
+        try:
+            response = requests.get(f"{BASE_URL}/students/{practice_student_id}")
+            if response.status_code == 200:
+                final_student = response.json()
+                final_ganz_count = len(final_student['uebungsfahrten_ganz'])
+                final_halb_count = len(final_student['uebungsfahrten_halb'])
+                
+                # Should have 7 full hours (8 added - 1 removed) and 3 half hours (4 added - 1 removed)
+                expected_ganz = 7
+                expected_halb = 3
+                
+                if final_ganz_count == expected_ganz and final_halb_count == expected_halb:
+                    self.log_test("Final Practice Hours State", True, f"Correct final state: {final_ganz_count} full, {final_halb_count} half hours")
+                else:
+                    self.log_test("Final Practice Hours State", False, f"Expected {expected_ganz} full, {expected_halb} half; got {final_ganz_count} full, {final_halb_count} half")
+            else:
+                self.log_test("Final Practice Hours State", False, f"Status: {response.status_code}")
+        except Exception as e:
+            self.log_test("Final Practice Hours State", False, f"Exception: {str(e)}")
+        
+        # Clean up test student
+        try:
+            requests.delete(f"{BASE_URL}/students/{practice_student_id}")
+            self.log_test("Cleanup Practice Hours Test Student", True, "Test student cleaned up")
+        except Exception as e:
+            self.log_test("Cleanup Practice Hours Test Student", False, f"Exception: {str(e)}")
+        
+        return True
+    
     def test_error_handling(self):
         """Test error handling for invalid requests"""
         print("\n=== TESTING ERROR HANDLING ===")
