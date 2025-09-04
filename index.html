@@ -2096,6 +2096,102 @@
             alert(`✅ ${name} ${surname} wurde erfolgreich aktualisiert!`);
         }
 
+        // KOMMENTAR-FUNKTIONEN
+        function showCommentDialog(studentId, categoryKey, sectionKey, itemKey, event) {
+            event.stopPropagation();
+            
+            const comments = getCommentsForStudent(studentId);
+            const commentKey = `${categoryKey}_${sectionKey}_${itemKey}`;
+            const existingComment = comments[commentKey] || '';
+            
+            const dialogHtml = `
+                <div class="dialog-overlay" onclick="closeCommentDialog(event)">
+                    <div class="dialog" onclick="event.stopPropagation()">
+                        <h2>Kommentar</h2>
+                        <p style="margin-bottom: 16px; color: #6b7280;">${itemKey}</p>
+                        <div class="form-group">
+                            <label for="comment-text">Notiz / Kommentar:</label>
+                            <textarea id="comment-text" rows="4" style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; resize: vertical;">${existingComment}</textarea>
+                        </div>
+                        <div class="dialog-buttons">
+                            <button type="button" class="btn-secondary" onclick="closeCommentDialog()">Abbrechen</button>
+                            <button type="button" class="btn-primary" onclick="saveComment('${studentId}', '${commentKey}')">Speichern</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', dialogHtml);
+        }
+
+        function showStudentCommentDialog(studentId) {
+            const comments = getCommentsForStudent(studentId);
+            const existingComment = comments['student_general'] || '';
+            
+            const dialogHtml = `
+                <div class="dialog-overlay" onclick="closeCommentDialog(event)">
+                    <div class="dialog" onclick="event.stopPropagation()">
+                        <h2>Schüler-Notizen</h2>
+                        <p style="margin-bottom: 16px; color: #6b7280;">Allgemeine Notizen zum Schüler</p>
+                        <div class="form-group">
+                            <label for="comment-text">Notiz / Kommentar:</label>
+                            <textarea id="comment-text" rows="6" style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; resize: vertical;">${existingComment}</textarea>
+                        </div>
+                        <div class="dialog-buttons">
+                            <button type="button" class="btn-secondary" onclick="closeCommentDialog()">Abbrechen</button>
+                            <button type="button" class="btn-primary" onclick="saveComment('${studentId}', 'student_general')">Speichern</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', dialogHtml);
+        }
+
+        function closeCommentDialog(event) {
+            if (event && event.target !== event.currentTarget) return;
+            const dialog = document.querySelector('.dialog-overlay');
+            if (dialog) dialog.remove();
+        }
+
+        function saveComment(studentId, commentKey) {
+            const commentText = document.getElementById('comment-text').value.trim();
+            
+            const comments = getCommentsForStudent(studentId);
+            if (commentText) {
+                comments[commentKey] = commentText;
+            } else {
+                delete comments[commentKey];
+            }
+            
+            saveCommentsForStudent(studentId, comments);
+            closeCommentDialog();
+            
+            // Ansicht aktualisieren um Kommentar-Icons zu zeigen
+            if (currentView === 'detail') {
+                renderStudentDetail(studentId);
+            }
+            
+            if (commentText) {
+                alert('✅ Kommentar gespeichert!');
+            } else {
+                alert('✅ Kommentar gelöscht!');
+            }
+        }
+
+        function getCommentsForStudent(studentId) {
+            const stored = localStorage.getItem('fahrschul_comments_professional');
+            const allComments = stored ? JSON.parse(stored) : {};
+            return allComments[studentId] || {};
+        }
+
+        function saveCommentsForStudent(studentId, comments) {
+            const stored = localStorage.getItem('fahrschul_comments_professional');
+            const allComments = stored ? JSON.parse(stored) : {};
+            allComments[studentId] = comments;
+            localStorage.setItem('fahrschul_comments_professional', JSON.stringify(allComments));
+        }
+
         // App Initialization
         function initApp() {
             try {
