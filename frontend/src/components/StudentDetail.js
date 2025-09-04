@@ -181,7 +181,7 @@ const StudentDetail = ({ student, onBack, onEdit }) => {
               <div className={`w-3 h-3 rounded-full ${studentData.practical_exam_passed ? 'bg-green-500' : 'bg-yellow-500'}`}></div>
               <span>
                 Praktische Prüfung: {studentData.practical_exam_passed ? 'Bestanden' : 'Geplant'}
-                {studentData.practical_exam_date && ` (${studentData.practical_exam_date})`}
+                {studentData.practical_exam_date && ` (${formatGermanDate(studentData.practical_exam_date)})`}
               </span>
             </div>
           )}
