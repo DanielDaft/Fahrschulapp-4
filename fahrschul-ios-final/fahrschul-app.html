@@ -149,7 +149,7 @@
             }
         ];
 
-        // Training Categories (Original aus Backend)
+        // Training Categories (KOMPLETT aus Backend)
         const TRAINING_CATEGORIES = {
             "grundstufe": {
                 "name": "Grundstufe",
@@ -180,6 +180,10 @@
                         "name": "Schalt-/Wählhebel",
                         "items": ["Schalt-/Wählhebel"]
                     },
+                    "zundschloss": {
+                        "name": "Zündschloss",
+                        "items": ["Zündschloss"]
+                    },
                     "motor_anlassen": {
                         "name": "Motor anlassen",
                         "items": ["Motor anlassen"]
@@ -190,7 +194,216 @@
                     },
                     "schaltubungen": {
                         "name": "Schaltübungen (umweltschonend)",
-                        "items": ["hoch: 1-2", "2-3", "3-4", "runter: 4-3", "3-2", "2-1"]
+                        "items": ["hoch: 1-2", "2-3", "3-4", "...", "runter: 4-3", "3-2", "2-1", "...", "runter: 4-2", "4-1", "3-1"]
+                    },
+                    "lenkubungen": {
+                        "name": "Lenkübungen",
+                        "items": ["Lenkübungen"]
+                    }
+                }
+            },
+            "aufbaustufe": {
+                "name": "Aufbaustufe", 
+                "subtitle": "Umweltschonendes, vorausschauendes Fahren, Blickschulung",
+                "color": "#F97316",
+                "sections": {
+                    "rollen_schalten": {
+                        "name": "Rollen und Schalten",
+                        "items": ["Rollen und Schalten"]
+                    },
+                    "abbremsen_schalten": {
+                        "name": "Abbremsen und Schalten",
+                        "items": ["Abbremsen und Schalten"]
+                    },
+                    "bremsübungen": {
+                        "name": "Bremsübungen",
+                        "items": ["degressiv", "Zielbremsungen", "Gefahrsituationen"]
+                    },
+                    "gefalle": {
+                        "name": "Gefälle",
+                        "items": ["Anhalten", "Anfahren", "Rückwärts", "Sichern", "Schalten"]
+                    },
+                    "steigung": {
+                        "name": "Steigung", 
+                        "items": ["Anhalten", "Anfahren", "Rückwärts", "Sichern", "Schalten"]
+                    },
+                    "tastgeschwindigkeit": {
+                        "name": "Tastgeschwindigkeit",
+                        "items": ["Tastgeschwindigkeit"]
+                    },
+                    "bedienungs_kontrolleinrichtungen": {
+                        "name": "Bedienungs- und Kontrolleinrichtungen",
+                        "items": ["Bedienungs- und Kontrolleinrichtungen"]
+                    },
+                    "ortliche_besonderheiten": {
+                        "name": "Örtliche Besonderheiten",
+                        "items": ["Örtliche Besonderheiten"]
+                    }
+                }
+            },
+            "leistungsstufe": {
+                "name": "Leistungsstufe",
+                "subtitle": "Schwierige Verkehrssituationen, umweltschonendes, vorausschauendes Fahren, Blickschulung/Bremsbereitschaft",
+                "color": "#EF4444", 
+                "sections": {
+                    "fahrbahnabutzung": {
+                        "name": "Fahrbahnbenutzung",
+                        "items": ["Einordnen", "Markierungen"]
+                    },
+                    "fahrstreifenwechsel": {
+                        "name": "Fahrstreifenwechsel",
+                        "items": ["links", "rechts"]
+                    },
+                    "vorbeifahren": {
+                        "name": "Vorbeifahren/Überholen",
+                        "items": ["Vorbeifahren/Überholen"]
+                    },
+                    "abbiegen": {
+                        "name": "Abbiegen",
+                        "items": ["rechts", "links", "mehrspurig", "Radweg", "Sonderstreifen", "Straßenbahnen", "Einbahnstraßen"]
+                    },
+                    "vorfahrt": {
+                        "name": "Vorfahrt",
+                        "items": ["rechts vor links", "Grünpfeil", "Polizeibeamte", "Grünpfeil-Schild"]
+                    },
+                    "geschwindigkeit_abstand": {
+                        "name": "Geschwindigkeit/Abstand",
+                        "items": ["Geschwindigkeit/Abstand"]
+                    },
+                    "situationen_verkehrsteilnehmer": {
+                        "name": "Situationen mit anderen Verkehrsteilnehmern",
+                        "items": ["Fußgängerüberwege", "Kinder", "Öffentl. Verkehrsmittel", "Schulbus", "Ältere/Behinderte", "Radfahrer/Mofa", "Einbahnstr./Radfahrer", "Verk.-beruh. Bereich"]
+                    },
+                    "schwierige_verkehrsfuhrung": {
+                        "name": "Schwierige Verkehrsführung",
+                        "items": ["Schwierige Verkehrsführung"]
+                    },
+                    "engpass": {
+                        "name": "Engpass",
+                        "items": ["Engpass"]
+                    },
+                    "kreisverkehr": {
+                        "name": "Kreisverkehr",
+                        "items": ["Kreisverkehr"]
+                    },
+                    "bahnubergang": {
+                        "name": "Bahnübergang (warten)",
+                        "items": ["Bahnübergang (warten)"]
+                    },
+                    "kritische_verkehrssituationen": {
+                        "name": "Kritische Verkehrssituationen",
+                        "items": ["Hauptverkehrszeiten", "Partnerschaftliches Verhalten (Kommunikation, Verzicht auf Vorfahrt)", "Schwung nutzen"]
+                    },
+                    "fussganger_schutzbereich": {
+                        "name": "Fußgänger Schutzbereich",
+                        "items": ["Fußgänger Schutzbereich"]
+                    }
+                }
+            },
+            "grundfahraufgaben": {
+                "name": "Grundfahraufgaben",
+                "color": "#F59E0B",
+                "sections": {
+                    "ruckwartsfahren": {
+                        "name": "Rückwärtsfahren",
+                        "items": ["Rückwärtsfahren"]
+                    },
+                    "umkehren": {
+                        "name": "Umkehren", 
+                        "items": ["Umkehren"]
+                    },
+                    "gefahrbremsung": {
+                        "name": "Gefahrbremsung",
+                        "items": ["Gefahrbremsung"]
+                    },
+                    "einparken_langs": {
+                        "name": "Einparken längs",
+                        "items": ["vorwärts rechts", "vorwärts links", "rückwärts rechts", "rückwärts links"]
+                    },
+                    "einparken_quer": {
+                        "name": "Einparken quer", 
+                        "items": ["vorwärts rechts", "vorwärts links", "rückwärts rechts", "rückwärts links"]
+                    }
+                }
+            },
+            "uberlandfahrten": {
+                "name": "Überlandfahrten",
+                "subtitle": "Sicheres und umweltschonendes Fahren mit höheren Geschwindigkeiten auf Landstraßen",
+                "color": "#FDE047",
+                "sections": {
+                    "geschwindigkeit_gangwahl": {
+                        "name": "Angepasste Geschwindigkeit/Gangwahl",
+                        "items": ["Angepasste Geschwindigkeit/Gangwahl (alle Gänge)"]
+                    },
+                    "abstand": {
+                        "name": "Abstand",
+                        "items": ["vorne", "hinten", "seitlich"]
+                    },
+                    "verkehrssituationen": {
+                        "name": "Verkehrssituationen",
+                        "items": ["Beobachtung/Spiegel", "Verkehrszeichen", "Kreuzungen/Einmündungen", "Kurven", "Steigungen", "Gefälle", "Alleen", "Überholen"]
+                    },
+                    "besondere_situationen": {
+                        "name": "Besondere Situationen",
+                        "items": ["Liegenbleiben • Absichern", "Einfahren in Ortschaften", "Fußgänger", "Wild/Tiere"]
+                    },
+                    "besondere_anforderungen": {
+                        "name": "Besondere Anforderungen",
+                        "items": ["Leistungsgrenze", "Ablenkung", "Konfliktsituationen"]
+                    }
+                }
+            },
+            "autobahn": {
+                "name": "Autobahn",
+                "subtitle": "Sicheres und umweltschonendes Fahren mit höheren Geschwindigkeiten auf Autobahnen",
+                "color": "#FDE047",
+                "sections": {
+                    "fahrtplanung": {
+                        "name": "Fahrtplanung und Einfahren",
+                        "items": ["Fahrtplanung", "Einfahren in BAB", "Fahrstreifenwahl", "Geschwindigkeit"]
+                    },
+                    "abstand": {
+                        "name": "Abstand",
+                        "items": ["vorne", "hinten", "seitlich"]
+                    },
+                    "autobahnfahren": {
+                        "name": "Autobahnfahren",
+                        "items": ["Überholen", "Schilder/Markierungen", "Vorbeifahren/Anschlussstellen", "Rast-/Parkplätze, Tankstellen", "Verhalten bei Unfällen", "Dichter Verkehr/Stau", "Besondere Situationen"]
+                    },
+                    "besondere_anforderungen": {
+                        "name": "Besondere Anforderungen",
+                        "items": ["Leistungsgrenze", "Ablenkung", "Konfliktsituationen"]
+                    },
+                    "verlassen": {
+                        "name": "Verlassen der BAB",
+                        "items": ["Verlassen der BAB"]
+                    }
+                }
+            },
+            "dammerung_dunkelheit": {
+                "name": "Dämmerung/Dunkelheit", 
+                "subtitle": "Kontrollieren/Einschalten der Beleuchtungseinrichtungen",
+                "color": "#6366F1",
+                "sections": {
+                    "beleuchtung": {
+                        "name": "Beleuchtung",
+                        "items": ["Kontrolle", "Benutzung", "Einstellen", "Fernlicht"]
+                    },
+                    "fahren_dunkelheit": {
+                        "name": "Fahren bei Dunkelheit",
+                        "items": ["Beleuchtete Straßen", "Unbeleuchtete Straßen", "Parken"]
+                    },
+                    "besondere_situationen": {
+                        "name": "Besondere Situationen",
+                        "items": ["Schlechte Witterung", "Bahnübergänge", "Tiere", "Unbeleuchtete Verkehrsteilnehmer"]
+                    },
+                    "besondere_anforderungen": {
+                        "name": "Besondere Anforderungen",
+                        "items": ["Blendung", "Orientierung"]
+                    },
+                    "abschlussbesprechung": {
+                        "name": "Abschlussbesprechung",
+                        "items": ["Abschlussbesprechung"]
                     }
                 }
             },
@@ -200,7 +413,7 @@
                 "sections": {
                     "fahrtechnische_vorbereitung": {
                         "name": "Checkliste zur fahrtechnischen Vorbereitung",
-                        "items": ["Reifen prüfen", "Scheiben, Leuchten, Blinker", "Kontrollleuchten", "Lenkung", "Bremsen"]
+                        "items": ["Reifen (z.B. Beschädigungen, Profiltiefe, Reifendruck)", "Scheiben, Leuchten, Blinker, Hupe", "Standlicht", "Abblendlicht", "Fernlicht", "Schlussleucht m. Kennzeichenbeleuchtung", "Nebelschlussleuchte", "Warnblinkanlage", "Blinker", "Hupe", "Bremsleuchte", "Kontrollleuchten benennen", "Rückstrahler", "Lenkung", "Funktionsprüfung der Bremsen"]
                     }
                 }
             },
@@ -214,6 +427,80 @@
                     }
                 }
             },
+            "beim_fahrer": {
+                "name": "Beim Fahrer (vor Fahrtbeginn)",
+                "subtitle": "Richtige Sitzeinstellung",
+                "color": "#60A5FA",
+                "sections": {
+                    "sitzeinstellung": {
+                        "name": "Richtige Sitzeinstellung",
+                        "items": ["Richtige Sitzeinstellung"]
+                    },
+                    "ruckspiegeleinstellung": {
+                        "name": "Einstellung der Rückspiegel",
+                        "items": ["der Kopfstütze", "des Lenkrades"]
+                    },
+                    "sicherheitsgurt": {
+                        "name": "Anlegen des Sicherheitsgurtes",
+                        "items": ["Anlegen des Sicherheitsgurtes"]
+                    }
+                }
+            },
+            "heizung_luftung": {
+                "name": "Heizung und Lüftung",
+                "color": "#60A5FA",
+                "sections": {
+                    "bedienen_aggregate": {
+                        "name": "Bedienen der Aggregate",
+                        "items": ["Heizung", "Lüftung", "Klimaanlage", "Heckscheibenheizung", "Beheizte Sonderausstattungen"]
+                    },
+                    "energiesparende_nutzung": {
+                        "name": "Energiesparende Nutzung",
+                        "items": ["keine unnötigen Verbraucher", "Rechtzeitiges Abschalten"]
+                    }
+                }
+            },
+            "betriebs_verkehrssicherheit": {
+                "name": "Betriebs- und Verkehrssicherheit",
+                "color": "#60A5FA",
+                "sections": {
+                    "motorraum": {
+                        "name": "Motorraum/Flüssigkeitsstände",
+                        "items": ["Motoröl", "Kühlmittel", "Scheibenwischflüssigkeit"]
+                    },
+                    "tanken": {
+                        "name": "Tanken",
+                        "items": ["Tanken"]
+                    },
+                    "sicherungsmittel": {
+                        "name": "Sicherungsmittel",
+                        "items": ["Warndreieck", "Verbandskasten", "Bordwerkzeug", "zusätzliche Ausrüstung"]
+                    },
+                    "aussenkontrolle": {
+                        "name": "Außenkontrolle (Schäden, Sauberkeit)",
+                        "items": ["Scheiben/Wischer", "Spiegel", "Kennzeichen(HU/AU)", "Beleuchtung"]
+                    },
+                    "bremsen": {
+                        "name": "Bremsen",
+                        "items": ["Bremsen"]
+                    },
+                    "ladung": {
+                        "name": "Ladung",
+                        "items": ["Sicherung", "Kennzeichnung"]
+                    }
+                }
+            },
+            "witterung": {
+                "name": "Witterung",
+                "subtitle": "Fahren bei verschiedenen Witterungsbedingungen",
+                "color": "#60A5FA",
+                "sections": {
+                    "schlechte_witterung": {
+                        "name": "Fahren bei schlechter Witterung",
+                        "items": ["Lüftung", "Beleuchtung", "Scheibenwischer/-wascher", "Regen, Sprühnebel", "Wasserlachen, Aquaplaning", "Wind, Sturm, Böen", "Schnee und Matsch", "Eis"]
+                    }
+                }
+            },
             "reife_teststufe": {
                 "name": "Reife- und Teststufe",
                 "subtitle": "Abschluss der Ausbildung - Prüfungsvorbereitung",
@@ -223,9 +510,21 @@
                         "name": "Selbstständiges Fahren",
                         "items": ["innerorts", "außerorts"]
                     },
+                    "verantwortungsbewusstes_fahren": {
+                        "name": "Verantwortungsbewusstes Fahren",
+                        "items": ["Verantwortungsbewusstes Fahren"]
+                    },
                     "testfahrt": {
                         "name": "Testfahrt unter Prüfungsbedingungen",
                         "items": ["FAKT", "andere"]
+                    },
+                    "wiederholung": {
+                        "name": "Wiederholung/Vertiefung",
+                        "items": ["Wiederholung/Vertiefung"]
+                    },
+                    "leistungsbewertung": {
+                        "name": "Leistungsbewertung", 
+                        "items": ["Leistungsbewertung"]
                     }
                 }
             }
