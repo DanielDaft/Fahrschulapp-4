@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import TrainingSection from './TrainingSection';
-import { ArrowLeft, User, Calendar, Phone, MapPin, Edit2, Eye, EyeOff } from 'lucide-react';
+import { ArrowLeft, User, Calendar, Phone, MapPin, Edit2, Eye, EyeOff, Plus, Minus } from 'lucide-react';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
