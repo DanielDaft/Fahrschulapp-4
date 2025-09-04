@@ -841,14 +841,27 @@ async def get_student_progress_stats(student_id: str):
                 elif 'items' in section:  # Has direct items
                     total_items += len(section['items'])
             
-            # Count completed items
+            # Count completed items with weighted scoring
+            weighted_score = 0
+            max_possible_score = total_items * 100  # Each item can have max 100% completion
+            
             for progress in progress_records:
                 if progress['category'] == category_key:
                     if progress['status'] in completed_items:
                         completed_items[progress['status']] += 1
+                        
+                        # Add weighted score based on completion level
+                        if progress['status'] == 'once':
+                            weighted_score += 25  # 25% weight for first completion
+                        elif progress['status'] == 'twice':
+                            weighted_score += 50  # 50% weight for second completion
+                        elif progress['status'] == 'thrice':
+                            weighted_score += 75  # 75% weight for third completion
+                        # Note: 'completed' status would get 100% but it seems not used in current system
             
             total_completed = sum(completed_items.values())
-            completion_percentage = round((total_completed / total_items * 100) if total_items > 0 else 0)
+            # Use weighted percentage instead of simple completion
+            completion_percentage = round((weighted_score / max_possible_score * 100) if max_possible_score > 0 else 0)
             
             stats[category_key] = {
                 'total_items': total_items,
