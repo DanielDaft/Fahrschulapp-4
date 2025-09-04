@@ -1451,12 +1451,15 @@
         }
 
         function renderPersonalInfo(student) {
+            const comments = getCommentsForStudent(student.id);
+            const hasStudentComment = comments['student_general'] && comments['student_general'].trim();
+            
             return `
                 <div class="section">
                     <div class="section-header">
                         <div class="section-icon">👤</div>
                         <div class="section-title">Schülerinformationen</div>
-                        <button class="comment-btn" onclick="showStudentCommentDialog('${student.id}')" title="Notizen hinzufügen">
+                        <button class="comment-btn ${hasStudentComment ? 'has-comment' : ''}" onclick="showStudentCommentDialog('${student.id}')" title="${hasStudentComment ? 'Notizen bearbeiten' : 'Notizen hinzufügen'}">
                             💬
                         </button>
                     </div>
