@@ -149,7 +149,7 @@
             }
         ];
 
-        // Training Categories (KOMPLETT aus Backend)
+        // Training Categories (VOLLSTÄNDIG aus Backend - 1:1 Copy)
         const TRAINING_CATEGORIES = {
             "grundstufe": {
                 "name": "Grundstufe",
@@ -331,17 +331,28 @@
                 "subtitle": "Sicheres und umweltschonendes Fahren mit höheren Geschwindigkeiten auf Landstraßen",
                 "color": "#FDE047",
                 "sections": {
-                    "geschwindigkeit_gangwahl": {
-                        "name": "Angepasste Geschwindigkeit/Gangwahl",
-                        "items": ["Angepasste Geschwindigkeit/Gangwahl (alle Gänge)"]
+                    "main_items": {
+                        "name": "",
+                        "items": [
+                            "Angepasste Geschwindigkeit/Gangwahl (alle Gänge)"
+                        ]
                     },
                     "abstand": {
                         "name": "Abstand",
                         "items": ["vorne", "hinten", "seitlich"]
                     },
-                    "verkehrssituationen": {
-                        "name": "Verkehrssituationen",
-                        "items": ["Beobachtung/Spiegel", "Verkehrszeichen", "Kreuzungen/Einmündungen", "Kurven", "Steigungen", "Gefälle", "Alleen", "Überholen"]
+                    "main_items_2": {
+                        "name": "",
+                        "items": [
+                            "Beobachtung/Spiegel",
+                            "Verkehrszeichen",
+                            "Kreuzungen/Einmündungen", 
+                            "Kurven",
+                            "Steigungen",
+                            "Gefälle",
+                            "Alleen",
+                            "Überholen"
+                        ]
                     },
                     "besondere_situationen": {
                         "name": "Besondere Situationen",
@@ -358,24 +369,37 @@
                 "subtitle": "Sicheres und umweltschonendes Fahren mit höheren Geschwindigkeiten auf Autobahnen",
                 "color": "#FDE047",
                 "sections": {
-                    "fahrtplanung": {
-                        "name": "Fahrtplanung und Einfahren",
-                        "items": ["Fahrtplanung", "Einfahren in BAB", "Fahrstreifenwahl", "Geschwindigkeit"]
+                    "main_items_1": {
+                        "name": "",
+                        "items": [
+                            "Fahrtplanung",
+                            "Einfahren in BAB",
+                            "Fahrstreifenwahl", 
+                            "Geschwindigkeit"
+                        ]
                     },
                     "abstand": {
                         "name": "Abstand",
                         "items": ["vorne", "hinten", "seitlich"]
                     },
-                    "autobahnfahren": {
-                        "name": "Autobahnfahren",
-                        "items": ["Überholen", "Schilder/Markierungen", "Vorbeifahren/Anschlussstellen", "Rast-/Parkplätze, Tankstellen", "Verhalten bei Unfällen", "Dichter Verkehr/Stau", "Besondere Situationen"]
+                    "main_items_2": {
+                        "name": "",
+                        "items": [
+                            "Überholen",
+                            "Schilder/Markierungen",
+                            "Vorbeifahren/Anschlussstellen",
+                            "Rast-/Parkplätze, Tankstellen",
+                            "Verhalten bei Unfällen",
+                            "Dichter Verkehr/Stau",
+                            "Besondere Situationen"
+                        ]
                     },
                     "besondere_anforderungen": {
                         "name": "Besondere Anforderungen",
                         "items": ["Leistungsgrenze", "Ablenkung", "Konfliktsituationen"]
                     },
-                    "verlassen": {
-                        "name": "Verlassen der BAB",
+                    "final_items": {
+                        "name": "",
                         "items": ["Verlassen der BAB"]
                     }
                 }
@@ -383,15 +407,19 @@
             "dammerung_dunkelheit": {
                 "name": "Dämmerung/Dunkelheit", 
                 "subtitle": "Kontrollieren/Einschalten der Beleuchtungseinrichtungen",
-                "color": "#6366F1",
+                "color": "#FDE047",
                 "sections": {
                     "beleuchtung": {
                         "name": "Beleuchtung",
                         "items": ["Kontrolle", "Benutzung", "Einstellen", "Fernlicht"]
                     },
-                    "fahren_dunkelheit": {
-                        "name": "Fahren bei Dunkelheit",
-                        "items": ["Beleuchtete Straßen", "Unbeleuchtete Straßen", "Parken"]
+                    "main_items": {
+                        "name": "",
+                        "items": [
+                            "Beleuchtete Straßen",
+                            "Unbeleuchtete Straßen", 
+                            "Parken"
+                        ]
                     },
                     "besondere_situationen": {
                         "name": "Besondere Situationen",
@@ -401,9 +429,36 @@
                         "name": "Besondere Anforderungen",
                         "items": ["Blendung", "Orientierung"]
                     },
-                    "abschlussbesprechung": {
-                        "name": "Abschlussbesprechung",
+                    "final_items": {
+                        "name": "",
                         "items": ["Abschlussbesprechung"]
+                    }
+                }
+            },
+            "reife_teststufe": {
+                "name": "Reife- und Teststufe",
+                "subtitle": "Abschluss der Ausbildung - Prüfungsvorbereitung",
+                "color": "#10B981",
+                "sections": {
+                    "selbststandiges_fahren": {
+                        "name": "Selbstständiges Fahren",
+                        "items": ["innerorts", "außerorts"]
+                    },
+                    "verantwortungsbewusstes_fahren": {
+                        "name": "Verantwortungsbewusstes Fahren",
+                        "items": ["Verantwortungsbewusstes Fahren"]
+                    },
+                    "testfahrt": {
+                        "name": "Testfahrt unter Prüfungsbedingungen",
+                        "items": ["FAKT", "andere"]
+                    },
+                    "wiederholung": {
+                        "name": "Wiederholung/Vertiefung",
+                        "items": ["Wiederholung/Vertiefung"]
+                    },
+                    "leistungsbewertung": {
+                        "name": "Leistungsbewertung", 
+                        "items": ["Leistungsbewertung"]
                     }
                 }
             },
@@ -413,7 +468,36 @@
                 "sections": {
                     "fahrtechnische_vorbereitung": {
                         "name": "Checkliste zur fahrtechnischen Vorbereitung",
-                        "items": ["Reifen (z.B. Beschädigungen, Profiltiefe, Reifendruck)", "Scheiben, Leuchten, Blinker, Hupe", "Standlicht", "Abblendlicht", "Fernlicht", "Schlussleucht m. Kennzeichenbeleuchtung", "Nebelschlussleuchte", "Warnblinkanlage", "Blinker", "Hupe", "Bremsleuchte", "Kontrollleuchten benennen", "Rückstrahler", "Lenkung", "Funktionsprüfung der Bremsen"]
+                        "sections": {
+                            "fahrzeug": {
+                                "name": "Beim Fahrzeug",
+                                "items": ["Reifen (z.B. Beschädigungen, Profiltiefe, Reifendruck)"]
+                            },
+                            "scheiben_leuchten": {
+                                "name": "Scheiben, Leuchten, Blinker, Hupe",
+                                "items": ["Ein- und Ausschalten"]
+                            },
+                            "funktion_prufen": {
+                                "name": "Funktion prüfen",
+                                "items": ["Standlicht", "Abblendlicht", "Fernlicht", "Schlussleucht m. Kennzeichenbeleuchtung", "Nebelschlussleuchte", "Warnblinkanlage", "Blinker", "Hupe", "Bremsleuchte"]
+                            },
+                            "kontrollleuchten": {
+                                "name": "Kontrollleuchten benennen",
+                                "items": ["Kontrollleuchten benennen"]
+                            },
+                            "ruckstrahler": {
+                                "name": "Rückstrahler",
+                                "items": ["Vorhandensein", "Beschädigung"]
+                            },
+                            "lenkung": {
+                                "name": "Lenkung",
+                                "items": ["Lenkschloss entriegeln", "Überprüfen des Lenkspiels"]
+                            },
+                            "bremsen": {
+                                "name": "Funktionsprüfung der Bremsen",
+                                "items": ["Betriebsbremse", "Feststellbremse"]
+                            }
+                        }
                     }
                 }
             },
@@ -498,33 +582,6 @@
                     "schlechte_witterung": {
                         "name": "Fahren bei schlechter Witterung",
                         "items": ["Lüftung", "Beleuchtung", "Scheibenwischer/-wascher", "Regen, Sprühnebel", "Wasserlachen, Aquaplaning", "Wind, Sturm, Böen", "Schnee und Matsch", "Eis"]
-                    }
-                }
-            },
-            "reife_teststufe": {
-                "name": "Reife- und Teststufe",
-                "subtitle": "Abschluss der Ausbildung - Prüfungsvorbereitung",
-                "color": "#10B981",
-                "sections": {
-                    "selbststandiges_fahren": {
-                        "name": "Selbstständiges Fahren",
-                        "items": ["innerorts", "außerorts"]
-                    },
-                    "verantwortungsbewusstes_fahren": {
-                        "name": "Verantwortungsbewusstes Fahren",
-                        "items": ["Verantwortungsbewusstes Fahren"]
-                    },
-                    "testfahrt": {
-                        "name": "Testfahrt unter Prüfungsbedingungen",
-                        "items": ["FAKT", "andere"]
-                    },
-                    "wiederholung": {
-                        "name": "Wiederholung/Vertiefung",
-                        "items": ["Wiederholung/Vertiefung"]
-                    },
-                    "leistungsbewertung": {
-                        "name": "Leistungsbewertung", 
-                        "items": ["Leistungsbewertung"]
                     }
                 }
             }
