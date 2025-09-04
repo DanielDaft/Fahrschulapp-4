@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Deutsche Fahrschul-App</title>
+    
+    <!-- iOS PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Fahrschule">
+    <meta name="theme-color" content="#1E40AF">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background-color: #f9fafb;
+            min-height: 100vh;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .container {
+            padding: 16px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1f2937;
+        }
+        
+        .header p {
+            color: #6b7280;
+            margin-top: 4px;
+        }
+        
+        .btn {
+            background: #3b82f6;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            min-height: 44px;
+            min-width: 44px;
+            transition: background-color 0.2s;
+        }
+        
+        .btn:hover {
+            background: #2563eb;
+        }
+        
+        .btn:active {
+            transform: scale(0.95);
+        }
+        
+        .student-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .student-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .student-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .student-card:active {
+            transform: scale(0.98);
+        }
+        
+        .student-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .student-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background: #e0f2fe;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        
+        .student-name {
+            font-weight: 600;
+            color: #1f2937;
+        }
+        
+        .student-date {
+            font-size: 14px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+        
+        .progress-display {
+            text-align: center;
+        }
+        
+        .progress-percent {
+            font-size: 20px;
+            font-weight: bold;
+            color: #dc2626;
+        }
+        
+        .progress-percent.good {
+            color: #059669;
+        }
+        
+        .progress-percent.medium {
+            color: #d97706;
+        }
+        
+        .progress-label {
+            font-size: 12px;
+            color: #6b7280;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #dc2626;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+        
+        .progress-fill.good {
+            background: #10b981;
+        }
+        
+        .progress-fill.medium {
+            background: #f59e0b;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+        
+        .stat-item {
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 8px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-weight: 600;
+            color: #1f2937;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #6b7280;
+        }
+        
+        .detail-view {
+            display: none;
+        }
+        
+        .detail-header {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .back-btn {
+            background: #f3f4f6;
+            color: #374151;
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .back-btn:hover {
+            background: #e5e7eb;
+        }
+        
+        .detail-content {
+            flex: 1;
+        }
+        
+        .detail-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1f2937;
+        }
+        
+        .detail-subtitle {
+            color: #6b7280;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .personal-info {
+            display: grid;
+            gap: 12px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+        
+        .fahrt-section {
+            margin-bottom: 20px;
+        }
+        
+        .fahrt-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .fahrt-title {
+            font-weight: 500;
+            color: #374151;
+        }
+        
+        .fahrt-badge {
+            background: rgba(59, 130, 246, 0.1);
+            color: #2563eb;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .fahrt-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+        
+        .fahrt-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            position: relative;
+        }
+        
+        .fahrt-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .fahrt-btn.completed {
+            background: #22c55e;
+            color: white;
+        }
+        
+        .fahrt-btn.incomplete {
+            background: #e5e7eb;
+            color: #6b7280;
+        }
+        
+        .fahrt-btn.add {
+            background: #3b82f6;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .training-info {
+            background: #eff6ff;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .training-info p {
+            font-size: 14px;
+            color: #1e40af;
+            margin-bottom: 4px;
+        }
+        
+        .category {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .category-header {
+            padding: 16px;
+            background: #3b82f6;
+            color: #1f2937;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s;
+        }
+        
+        .category-header:hover {
+            filter: brightness(1.05);
+        }
+        
+        /* DEZENTERE FARBEN - bessere Lesbarkeit */
+        .category-header.grundstufe {
+            background: linear-gradient(135deg, #fef3c7, #fcd34d);
+            color: #92400e;
+        }
+        
+        .category-header.aufbaustufe {
+            background: linear-gradient(135deg, #fed7d7, #fb923c);
+            color: #9a3412;
+        }
+        
+        .category-header.leistungsstufe {
+            background: linear-gradient(135deg, #fecaca, #f87171);
+            color: #991b1b;
+        }
+        
+        .category-info h3 {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .category-subtitle {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .category-progress {
+            text-align: right;
+        }
+        
+        .category-percentage {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .category-items {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .category-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 4px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        
+        .category-bar-fill {
+            height: 100%;
+            background: rgba(255,255,255,0.8);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        .category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .category-content.expanded {
+            max-height: 1000px;
+        }
+        
+        .category-items-list {
+            padding: 16px;
+        }
+        
+        .item-group {
+            margin-bottom: 16px;
+            padding-left: 12px;
+            border-left: 4px solid #e5e7eb;
+        }
+        
+        .item-group h4 {
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+        
+        .item-list {
+            display: grid;
+            gap: 4px;
+        }
+        
+        .progress-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        
+        .progress-checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #d1d5db;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+            font-weight: bold;
+            background: white;
+        }
+        
+        .progress-checkbox:hover {
+            border-color: #9ca3af;
+            transform: scale(1.05);
+        }
+        
+        .progress-checkbox:active {
+            transform: scale(0.95);
+        }
+        
+        /* DEZENTERE FARBEN für Checkboxen */
+        .progress-checkbox.once {
+            background: #fefce8;
+            color: #a16207;
+            border-color: #eab308;
+        }
+        
+        .progress-checkbox.twice {
+            background: #f0f9ff;
+            color: #0369a1;
+            border-color: #0ea5e9;
+        }
+        
+        .progress-checkbox.thrice {
+            background: #f0fdf4;
+            color: #15803d;
+            border-color: #22c55e;
+        }
+        
+        .progress-text {
+            color: #6b7280;
+            flex: 1;
+        }
+        
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        
+        .spinner {
+            width: 64px;
+            height: 64px;
+            border: 4px solid #e5e7eb;
+            border-left: 4px solid #2563eb;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 16px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+        
+        .loading-subtitle {
+            font-size: 14px;
+            color: #9ca3af;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+        
+        .footer p {
+            margin-bottom: 4px;
+        }
+        
+        /* Dialog Styles - Neuer Fahrschüler */
+        .dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .dialog {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 400px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+        
+        .dialog h2 {
+            margin-bottom: 20px;
+            color: #1f2937;
+            font-size: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #374151;
+            font-size: 14px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        
+        .dialog-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+        
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            flex: 1;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+        
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            flex: 1;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 12px;
+            }
+            
+            .header {
+                flex-direction: column;
+                text-align: center;
+                gap: 12px;
+            }
+            
+            .student-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Loading Screen -->
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <div class="loading-title">Deutsche Fahrschul-App wird geladen...</div>
+            <div class="loading-subtitle">Verbesserte Version mit dezenten Farben</div>
+        </div>
+        
+        <!-- Main Content -->
+        <div id="main-content" style="display: none;">
+            <!-- Content wird hier eingefügt -->
+        </div>
+    </div>
+    
+    <script>
+        // Demo-Daten
+        const DEMO_STUDENTS = [
+            {
+                id: 'anna-schmidt-001',
+                name: 'Anna',
+                surname: 'Schmidt',
+                date_of_birth: '1998-03-20',
+                address: 'Musterstraße 123, 12345 Berlin',
+                phone: '+49 123 456789',
+                start_date: '2024-01-15',
+                theory_exam_date: '2025-10-15',
+                practical_exam_date: '2025-11-20',
+                theory_exam_passed: false,
+                practical_exam_passed: false,
+                wears_glasses: true,
+                ueberlandfahrten: [true, true, false, true, false],
+                autobahnfahrten: [true, false, true, false, true],
+                nachtfahrten: [false, true, false],
+                uebungsfahrten_ganz: [true, true, false, true, false, false, true, false, true, true],
+                uebungsfahrten_halb: [true, false, true, false, true]
+            },
+            {
+                id: 'daniel-daft-002',
+                name: 'Daniel',
+                surname: 'Daft',
+                date_of_birth: '1995-07-12',
+                address: 'Beispielweg 456, 54321 Hamburg',
+                phone: '+49 987 654321',
+                start_date: '2024-02-01',
+                theory_exam_date: '2025-09-20',
+                practical_exam_date: '2025-10-25',
+                theory_exam_passed: true,
+                practical_exam_passed: false,
+                wears_glasses: false,
+                ueberlandfahrten: [true, false, true, false, true],
+                autobahnfahrten: [false, true, true, false],
+                nachtfahrten: [true, false, true],
+                uebungsfahrten_ganz: [true, true, true, false, true, false, true],
+                uebungsfahrten_halb: [false, true, true, false]
+            },
+            {
+                id: 'test-schueler-003',
+                name: 'Test',
+                surname: 'Schüler',
+                date_of_birth: '2000-12-05',
+                address: 'Teststraße 789, 98765 München',
+                phone: '+49 555 123456',
+                start_date: '2024-03-10',
+                theory_exam_passed: false,
+                practical_exam_passed: false,
+                wears_glasses: null,
+                ueberlandfahrten: [false, false, false, false, false],
+                autobahnfahrten: [false, false, false, false],
+                nachtfahrten: [false, false, false],
+                uebungsfahrten_ganz: [true, false, false],
+                uebungsfahrten_halb: [false, true]
+            }
+        ];
+
+        // Vereinfachte Ausbildungskategorien für bessere Performance
+        const TRAINING_CATEGORIES = {
+            "grundstufe": {
+                "name": "Grundstufe",
+                "subtitle": "Einweisung und Bedienung",
+                "items": [
+                    "Besonderheiten beim Einsteigen",
+                    "Sitz, Spiegel, Lenkrad, Kopfstütze einstellen",
+                    "Lenkradhaltung",
+                    "Pedale",
+                    "Gurt anlegen/anpassen",
+                    "Schalt-/Wählhebel",
+                    "Zündschloss",
+                    "Motor anlassen",
+                    "Anfahren/Anhalteübungen",
+                    "Schaltübungen (umweltschonend)",
+                    "Lenkübungen"
+                ]
+            },
+            "aufbaustufe": {
+                "name": "Aufbaustufe", 
+                "subtitle": "Umweltschonendes, vorausschauendes Fahren",
+                "items": [
+                    "Rollen und Schalten",
+                    "Abbremsen und Schalten", 
+                    "Bremsübungen (degressiv, Zielbremsungen)",
+                    "Gefälle (Anhalten, Anfahren, Rückwärts)",
+                    "Steigung (Anhalten, Anfahren, Rückwärts)",
+                    "Tastgeschwindigkeit",
+                    "Bedienungs- und Kontrolleinrichtungen",
+                    "Örtliche Besonderheiten"
+                ]
+            },
+            "leistungsstufe": {
+                "name": "Leistungsstufe",
+                "subtitle": "Schwierige Verkehrssituationen",
+                "items": [
+                    "Fahrbahnbenutzung (Einordnen, Markierungen)",
+                    "Fahrstreifenwechsel (links, rechts)",
+                    "Vorbeifahren/Überholen",
+                    "Abbiegen (rechts, links, mehrspurig)",
+                    "Vorfahrt (rechts vor links, Ampeln)",
+                    "Geschwindigkeit/Abstand",
+                    "Situationen mit anderen Verkehrsteilnehmern",
+                    "Schwierige Verkehrsführung",
+                    "Engpass",
+                    "Kreisverkehr",
+                    "Bahnübergang",
+                    "Kritische Verkehrssituationen"
+                ]
+            }
+        };
+
+        // Storage Manager
+        const StorageManager = {
+            getStudents: () => {
+                const stored = localStorage.getItem('fahrschul_students_v3');
+                return stored ? JSON.parse(stored) : [];
+            },
+            
+            saveStudents: (students) => {
+                localStorage.setItem('fahrschul_students_v3', JSON.stringify(students));
+            },
+            
+            getStudentById: (id) => {
+                const students = StorageManager.getStudents();
+                return students.find(s => s.id === id);
+            },
+            
+            updateStudent: (updatedStudent) => {
+                const students = StorageManager.getStudents();
+                const index = students.findIndex(s => s.id === updatedStudent.id);
+                if (index >= 0) {
+                    students[index] = { ...updatedStudent, updated_at: new Date().toISOString() };
+                    StorageManager.saveStudents(students);
+                    return students[index];
+                }
+                return null;
+            },
+            
+            getProgressForStudent: (studentId) => {
+                const stored = localStorage.getItem('fahrschul_progress_v3');
+                const allProgress = stored ? JSON.parse(stored) : {};
+                return allProgress[studentId] || {};
+            },
+            
+            saveProgressForStudent: (studentId, progress) => {
+                const stored = localStorage.getItem('fahrschul_progress_v3');
+                const allProgress = stored ? JSON.parse(stored) : {};
+                allProgress[studentId] = progress;
+                localStorage.setItem('fahrschul_progress_v3', JSON.stringify(allProgress));
+            },
+            
+            initDemoData: () => {
+                if (StorageManager.getStudents().length === 0) {
+                    StorageManager.saveStudents(DEMO_STUDENTS);
+                }
+            }
+        };
+
+        // Utility Functions
+        function formatGermanDate(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('de-DE', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+        }
+
+        function calculateOverallProgress(student) {
+            const fahrten = [
+                ...(student.ueberlandfahrten || []),
+                ...(student.autobahnfahrten || []),
+                ...(student.nachtfahrten || []),
+                ...(student.uebungsfahrten_ganz || []),
+                ...(student.uebungsfahrten_halb || [])
+            ];
+            
+            const completed = fahrten.filter(Boolean).length;
+            const total = fahrten.length;
+            
+            return total > 0 ? Math.round((completed / total) * 100) : 0;
+        }
+
+        function getProgressClass(percentage) {
+            if (percentage >= 70) return 'good';
+            if (percentage >= 40) return 'medium';
+            return '';
+        }
+
+        // App State
+        let currentView = 'list';
+        let selectedStudent = null;
+
+        // Render Functions
+        function renderStudentList() {
+            const students = StorageManager.getStudents();
+            
+            let html = `
+                <div class="container">
+                    <div class="header">
+                        <div>
+                            <h1>🚗 Deutsche Fahrschul-App</h1>
+                            <p>Verbesserte Version mit dezenten Farben</p>
+                        </div>
+                        <button class="btn" onclick="showNewStudentDialog()">
+                            + Neu
+                        </button>
+                    </div>
+
+                    <div class="student-grid">
+            `;
+            
+            students.forEach(student => {
+                const progress = calculateOverallProgress(student);
+                const progressClass = getProgressClass(progress);
+                
+                html += `
+                    <div class="student-card" onclick="openStudentDetail('${student.id}')">
+                        <div class="student-header">
+                            <div class="student-info">
+                                <div class="avatar">👤</div>
+                                <div>
+                                    <div class="student-name">${student.name} ${student.surname}</div>
+                                    <div class="student-date">Seit ${formatGermanDate(student.start_date)}</div>
+                                </div>
+                            </div>
+                            <div class="progress-display">
+                                <div class="progress-percent ${progressClass}">${progress}%</div>
+                                <div class="progress-label">Fortschritt</div>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-bar">
+                            <div class="progress-fill ${progressClass}" style="width: ${progress}%"></div>
+                        </div>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-number">${(student.uebungsfahrten_ganz || []).filter(Boolean).length}</div>
+                                <div class="stat-label">Ganze h</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">${(student.uebungsfahrten_halb || []).filter(Boolean).length}</div>
+                                <div class="stat-label">Halbe h</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">${(student.ueberlandfahrten || []).filter(Boolean).length}/5</div>
+                                <div class="stat-label">Überland</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">${(student.autobahnfahrten || []).filter(Boolean).length}/4</div>
+                                <div class="stat-label">Autobahn</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `
+                    </div>
+                    
+                    <div class="footer">
+                        <p>📋 Vollständiger Ausbildungsbaum implementiert</p>
+                        <p>🔄 Gewichtete Fortschrittsverfolgung: / (25%) • × (60%) • ⊗ (100%)</p>
+                        <p>💾 Alle Daten werden lokal gespeichert</p>
+                        <p>✨ Verbesserte Version: Dezente Farben, kein Blinken, neue Schüler</p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('main-content').innerHTML = html;
+            currentView = 'list';
+        }
+
+        function renderStudentDetail(studentId) {
+            const student = StorageManager.getStudentById(studentId);
+            if (!student) {
+                renderStudentList();
+                return;
+            }
+            
+            selectedStudent = student;
+            
+            let html = `
+                <div class="container">
+                    <div class="detail-header">
+                        <button class="back-btn" onclick="renderStudentList()">←</button>
+                        <div class="detail-content">
+                            <div class="detail-title">${student.name} ${student.surname}</div>
+                            <div class="detail-subtitle">Fahrschüler-Details</div>
+                        </div>
+                        <button class="btn" onclick="showAlert('Bearbeiten - Feature kommt bald!')">✏️</button>
+                    </div>
+
+                    <div class="section">
+                        <h2>👤 Persönliche Daten</h2>
+                        <div class="personal-info">
+                            ${student.date_of_birth ? `<div class="info-item">📅 Geburtsdatum: ${formatGermanDate(student.date_of_birth)}</div>` : ''}
+                            ${student.phone ? `<div class="info-item">📞 Telefon: ${student.phone}</div>` : ''}
+                            ${student.address ? `<div class="info-item">📍 Adresse: ${student.address}</div>` : ''}
+                            <div class="info-item">📅 Ausbildungsbeginn: ${formatGermanDate(student.start_date)}</div>
+                            ${student.theory_exam_date ? `<div class="info-item">📝 Theorieprüfung: ${student.theory_exam_passed ? 'Bestanden' : 'Geplant'} (${formatGermanDate(student.theory_exam_date)})</div>` : ''}
+                            ${student.practical_exam_date ? `<div class="info-item">🚗 Praktische Prüfung: ${student.practical_exam_passed ? 'Bestanden' : 'Geplant'} (${formatGermanDate(student.practical_exam_date)})</div>` : ''}
+                            ${student.wears_glasses !== null ? `<div class="info-item">👓 Brillenträger: ${student.wears_glasses ? 'Ja' : 'Nein'}</div>` : ''}
+                        </div>
+                    </div>
+
+                    ${renderFahrtenSection(student)}
+                    ${renderTrainingProgress(student)}
+                </div>
+            `;
+            
+            document.getElementById('main-content').innerHTML = html;
+            currentView = 'detail';
+        }
+
+        function renderFahrtenSection(student) {
+            return `
+                <div class="section">
+                    <h2>🚗 Geleistete Fahrten</h2>
+                    
+                    ${renderFahrtType(student, 'Überlandfahrten (5 Fahrten)', 'ueberlandfahrten', false)}
+                    ${renderFahrtType(student, 'Autobahnfahrten (4 Fahrten)', 'autobahnfahrten', false)}
+                    ${renderFahrtType(student, 'Nachtfahrten (3 Fahrten)', 'nachtfahrten', false)}
+                    ${renderFahrtType(student, 'Ganze Übungsstunden', 'uebungsfahrten_ganz', true)}
+                    ${renderFahrtType(student, 'Halbe Übungsstunden', 'uebungsfahrten_halb', true)}
+                </div>
+            `;
+        }
+
+        function renderFahrtType(student, title, category, canAddRemove) {
+            const fahrten = student[category] || [];
+            const completed = fahrten.filter(Boolean).length;
+            const total = fahrten.length;
+            const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+            
+            let html = `
+                <div class="fahrt-section">
+                    <div class="fahrt-header">
+                        <div class="fahrt-title">${title}</div>
+                        <div class="fahrt-badge">${percentage}% (${completed}/${total})</div>
+                    </div>
+                    <div class="fahrt-buttons" id="buttons-${category}">
+            `;
+            
+            fahrten.forEach((completed, index) => {
+                html += `
+                    <button class="fahrt-btn ${completed ? 'completed' : 'incomplete'}" 
+                            onclick="toggleFahrt('${student.id}', '${category}', ${index})"
+                            data-category="${category}" data-index="${index}">
+                        ${index + 1}
+                    </button>
+                `;
+            });
+            
+            if (canAddRemove) {
+                html += `
+                    <button class="fahrt-btn add" onclick="addFahrt('${student.id}', '${category}')">
+                        +
+                    </button>
+                `;
+            }
+            
+            html += `
+                    </div>
+                </div>
+            `;
+            
+            return html;
+        }
+
+        function renderTrainingProgress(student) {
+            let html = `
+                <div class="section">
+                    <h2>📋 Ausbildungsfortschritt</h2>
+                    <div class="training-info">
+                        <p><strong>Fortschrittssymbole:</strong> / (25%) • × (60%) • ⊗ (100%)</p>
+                        <p>💡 Tippen Sie auf die Checkboxen, um den Fortschritt zu ändern</p>
+                    </div>
+            `;
+            
+            Object.entries(TRAINING_CATEGORIES).forEach(([key, category]) => {
+                const progress = StorageManager.getProgressForStudent(student.id);
+                const categoryProgress = progress[key] || {};
+                
+                let completedItems = 0;
+                let weightedScore = 0;
+                const totalItems = category.items.length;
+                
+                category.items.forEach(item => {
+                    const status = categoryProgress[item];
+                    if (status === 'once') {
+                        completedItems++;
+                        weightedScore += 25;
+                    } else if (status === 'twice') {
+                        completedItems++;
+                        weightedScore += 60;
+                    } else if (status === 'thrice') {
+                        completedItems++;
+                        weightedScore += 100;
+                    }
+                });
+                
+                const percentage = totalItems > 0 ? Math.round((weightedScore / (totalItems * 100)) * 100) : 0;
+                const expanded = key === 'grundstufe';
+                
+                html += `
+                    <div class="category">
+                        <div class="category-header ${key}" onclick="toggleTrainingSection('${key}')">
+                            <div class="category-info">
+                                <h3>${category.name}</h3>
+                                ${category.subtitle ? `<div class="category-subtitle">${category.subtitle}</div>` : ''}
+                            </div>
+                            <div class="category-progress">
+                                <div class="category-percentage" id="progress-${key}">${percentage}%</div>
+                                <div class="category-items">${totalItems} Items</div>
+                            </div>
+                        </div>
+                        <div class="category-bar">
+                            <div class="category-bar-fill" id="bar-${key}" style="width: ${percentage}%"></div>
+                        </div>
+                        
+                        <div id="section-${key}" class="category-content ${expanded ? 'expanded' : ''}">
+                            <div class="category-items-list">
+                                <div class="item-group">
+                                    <div class="item-list">
+                                        ${category.items.map(item => {
+                                            const status = categoryProgress[item] || 'not_started';
+                                            const symbol = getStatusSymbol(status);
+                                            const statusClass = status !== 'not_started' ? status : '';
+                                            
+                                            return `
+                                                <div class="progress-item">
+                                                    <div class="progress-checkbox ${statusClass}" 
+                                                         onclick="toggleProgressItem('${student.id}', '${key}', '${item}', event)"
+                                                         data-category="${key}" data-item="${item}">
+                                                        ${symbol}
+                                                    </div>
+                                                    <span class="progress-text">${item}</span>
+                                                </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `</div>`;
+            return html;
+        }
+
+        function getStatusSymbol(status) {
+            switch(status) {
+                case 'once': return '/';
+                case 'twice': return '×';
+                case 'thrice': return '⊗';
+                default: return '';
+            }
+        }
+
+        function getNextStatus(currentStatus) {
+            const statusCycle = ['not_started', 'once', 'twice', 'thrice'];
+            const currentIndex = statusCycle.indexOf(currentStatus || 'not_started');
+            return statusCycle[(currentIndex + 1) % statusCycle.length];
+        }
+
+        // Event Handlers (OHNE BLINKEN - optimiert)
+        function openStudentDetail(studentId) {
+            renderStudentDetail(studentId);
+        }
+
+        function toggleFahrt(studentId, category, index) {
+            const student = StorageManager.getStudentById(studentId);
+            if (!student) return;
+            
+            const updatedFahrten = [...student[category]];
+            updatedFahrten[index] = !updatedFahrten[index];
+            
+            const updatedStudent = {
+                ...student,
+                [category]: updatedFahrten
+            };
+            
+            StorageManager.updateStudent(updatedStudent);
+            
+            // Nur den einen Button aktualisieren - KEIN BLINKEN!
+            const button = document.querySelector(`button[data-category="${category}"][data-index="${index}"]`);
+            if (button) {
+                if (updatedFahrten[index]) {
+                    button.className = 'fahrt-btn completed';
+                } else {
+                    button.className = 'fahrt-btn incomplete';
+                }
+            }
+        }
+
+        function addFahrt(studentId, category) {
+            const student = StorageManager.getStudentById(studentId);
+            if (!student) return;
+            
+            const updatedFahrten = [...(student[category] || []), false];
+            const updatedStudent = {
+                ...student,
+                [category]: updatedFahrten
+            };
+            
+            StorageManager.updateStudent(updatedStudent);
+            
+            // Nur den Fahrt-Bereich neu rendern
+            const buttonsContainer = document.getElementById(`buttons-${category}`);
+            if (buttonsContainer) {
+                const newIndex = updatedFahrten.length - 1;
+                const addButton = buttonsContainer.querySelector('.add');
+                
+                const newButton = document.createElement('button');
+                newButton.className = 'fahrt-btn incomplete';
+                newButton.onclick = () => toggleFahrt(studentId, category, newIndex);
+                newButton.setAttribute('data-category', category);
+                newButton.setAttribute('data-index', newIndex);
+                newButton.textContent = newIndex + 1;
+                
+                buttonsContainer.insertBefore(newButton, addButton);
+            }
+        }
+
+        function toggleTrainingSection(sectionId) {
+            const section = document.getElementById(`section-${sectionId}`);
+            if (section) {
+                section.classList.toggle('expanded');
+            }
+        }
+
+        function toggleProgressItem(studentId, categoryKey, itemKey, event) {
+            const progress = StorageManager.getProgressForStudent(studentId);
+            if (!progress[categoryKey]) progress[categoryKey] = {};
+            
+            const currentStatus = progress[categoryKey][itemKey] || 'not_started';
+            const nextStatus = getNextStatus(currentStatus);
+            
+            progress[categoryKey][itemKey] = nextStatus;
+            StorageManager.saveProgressForStudent(studentId, progress);
+            
+            // Nur das angeklickte Element aktualisieren - KEIN BLINKEN!
+            const element = event.target;
+            const symbol = getStatusSymbol(nextStatus);
+            const statusClass = nextStatus !== 'not_started' ? nextStatus : '';
+            
+            element.textContent = symbol;
+            element.className = `progress-checkbox ${statusClass}`;
+            
+            // Fortschrittsbalken der Kategorie aktualisieren
+            updateCategoryProgress(categoryKey, studentId);
+        }
+
+        function updateCategoryProgress(categoryKey, studentId) {
+            const category = TRAINING_CATEGORIES[categoryKey];
+            if (!category) return;
+            
+            const progress = StorageManager.getProgressForStudent(studentId);
+            const categoryProgress = progress[categoryKey] || {};
+            
+            let weightedScore = 0;
+            const totalItems = category.items.length;
+            
+            category.items.forEach(item => {
+                const status = categoryProgress[item];
+                if (status === 'once') weightedScore += 25;
+                else if (status === 'twice') weightedScore += 60;
+                else if (status === 'thrice') weightedScore += 100;
+            });
+            
+            const percentage = totalItems > 0 ? Math.round((weightedScore / (totalItems * 100)) * 100) : 0;
+            
+            // Fortschrittsbalken aktualisieren - OHNE komplette Seiten-Neuladung
+            const progressBar = document.getElementById(`bar-${categoryKey}`);
+            const progressText = document.getElementById(`progress-${categoryKey}`);
+            
+            if (progressBar) progressBar.style.width = `${percentage}%`;
+            if (progressText) progressText.textContent = `${percentage}%`;
+        }
+
+        // Neuer Fahrschüler Dialog
+        function showNewStudentDialog() {
+            const dialog = document.createElement('div');
+            dialog.className = 'dialog-overlay';
+            dialog.innerHTML = `
+                <div class="dialog">
+                    <h2>Neuer Fahrschüler</h2>
+                    <div class="form-group">
+                        <label>Vorname *</label>
+                        <input type="text" id="new-name" placeholder="z.B. Max" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nachname *</label>
+                        <input type="text" id="new-surname" placeholder="z.B. Mustermann" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Geburtsdatum</label>
+                        <input type="date" id="new-birth">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefon</label>
+                        <input type="tel" id="new-phone" placeholder="+49 123 456789">
+                    </div>
+                    <div class="form-group">
+                        <label>Adresse</label>
+                        <input type="text" id="new-address" placeholder="Straße, PLZ Ort">
+                    </div>
+                    <div class="form-group">
+                        <label>Ausbildungsbeginn</label>
+                        <input type="date" id="new-start" value="${new Date().toISOString().split('T')[0]}">
+                    </div>
+                    <div class="dialog-buttons">
+                        <button class="btn-secondary" onclick="closeNewStudentDialog()">Abbrechen</button>
+                        <button class="btn-primary" onclick="createNewStudent()">Erstellen</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(dialog);
+            
+            // Focus auf erstes Eingabefeld
+            setTimeout(() => {
+                document.getElementById('new-name').focus();
+            }, 100);
+        }
+
+        function closeNewStudentDialog() {
+            const dialog = document.querySelector('.dialog-overlay');
+            if (dialog) {
+                dialog.remove();
+            }
+        }
+
+        function createNewStudent() {
+            const name = document.getElementById('new-name').value.trim();
+            const surname = document.getElementById('new-surname').value.trim();
+            
+            if (!name || !surname) {
+                alert('Bitte Vor- und Nachname eingeben!');
+                return;
+            }
+            
+            const newStudent = {
+                id: 'student-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+                name: name,
+                surname: surname,
+                date_of_birth: document.getElementById('new-birth').value || null,
+                phone: document.getElementById('new-phone').value.trim() || null,
+                address: document.getElementById('new-address').value.trim() || null,
+                start_date: document.getElementById('new-start').value || new Date().toISOString().split('T')[0],
+                theory_exam_date: null,
+                practical_exam_date: null,
+                theory_exam_passed: false,
+                practical_exam_passed: false,
+                wears_glasses: null,
+                ueberlandfahrten: [false, false, false, false, false],
+                autobahnfahrten: [false, false, false, false],
+                nachtfahrten: [false, false, false],
+                uebungsfahrten_ganz: [],
+                uebungsfahrten_halb: [],
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString()
+            };
+            
+            const students = StorageManager.getStudents();
+            students.push(newStudent);
+            StorageManager.saveStudents(students);
+            
+            closeNewStudentDialog();
+            renderStudentList();
+            
+            // Erfolgsmeldung
+            setTimeout(() => {
+                alert(`✅ ${name} ${surname} wurde erfolgreich hinzugefügt!`);
+            }, 100);
+        }
+
+        function showAlert(message) {
+            alert(message);
+        }
+
+        // App Initialization
+        function initApp() {
+            try {
+                console.log('🚗 Deutsche Fahrschul-App wird initialisiert...');
+                
+                // Demo-Daten initialisieren
+                StorageManager.initDemoData();
+                console.log('✅ Demo-Daten geladen');
+                
+                // Loading Screen ausblenden
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                
+                // Student List anzeigen
+                renderStudentList();
+                console.log('✅ App erfolgreich gestartet!');
+                console.log('✨ Verbesserungen: Dezente Farben, kein Blinken, neue Schüler');
+                
+            } catch (error) {
+                console.error('❌ Fehler beim Initialisieren:', error);
+                document.getElementById('loading').innerHTML = `
+                    <div class="loading-title">Fehler beim Laden</div>
+                    <div class="loading-subtitle">Bitte Seite neu laden</div>
+                `;
+            }
+        }
+
+        // App starten
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📱 DOM geladen, starte App...');
+            // Kurze Verzögerung für bessere UX
+            setTimeout(initApp, 500);
+        });
+        
+        // Fallback falls DOMContentLoaded nicht funktioniert
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initApp);
+        } else {
+            setTimeout(initApp, 500);
+        }
+    </script>
+</body>
+</html>
