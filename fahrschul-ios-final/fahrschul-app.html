@@ -907,9 +907,9 @@
             return html;
         }
 
-        // Training Category rendern
+        // Training Category rendern (mit verschachtelten Sections)
         function renderTrainingCategory(key, category, student, expanded) {
-            const totalItems = Object.values(category.sections).reduce((sum, section) => sum + (section.items ? section.items.length : 0), 0);
+            const totalItems = countTotalItems(category.sections);
             const completedItems = Math.floor(totalItems * Math.random() * 0.3); // Demo-Progress
             const percentage = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
             
@@ -931,27 +931,73 @@
                         </div>
                     </div>
                     
-                    <div id="section-${key}" class="overflow-hidden transition-all duration-300" style="max-height: ${expanded ? '1000px' : '0'};">
+                    <div id="section-${key}" class="overflow-hidden transition-all duration-300" style="max-height: ${expanded ? '2000px' : '0'};">
                         <div class="p-4 space-y-3">
-                            ${Object.entries(category.sections).map(([sectionKey, section]) => `
-                                <div class="border-l-4 border-gray-200 pl-3">
-                                    <h4 class="font-medium text-gray-700 mb-2">${section.name}</h4>
-                                    <div class="space-y-1">
-                                        ${section.items ? section.items.map(item => `
-                                            <div class="flex items-center gap-2 text-sm">
-                                                <div class="w-4 h-4 border border-gray-300 rounded flex items-center justify-center text-xs">
-                                                    ${Math.random() > 0.7 ? '✓' : ''}
-                                                </div>
-                                                <span class="text-gray-600">${item}</span>
-                                            </div>
-                                        `).join('') : ''}
-                                    </div>
-                                </div>
-                            `).join('')}
+                            ${Object.entries(category.sections).map(([sectionKey, section]) => 
+                                renderSection(section, sectionKey, 0)
+                            ).join('')}
                         </div>
                     </div>
                 </div>
             `;
+        }
+
+        // Section rendern (rekursiv für verschachtelte Strukturen)
+        function renderSection(section, sectionKey, level = 0) {
+            if (section.sections) {
+                // Hat verschachtelte Sections
+                return `
+                    <div class="${level > 0 ? 'ml-4 border-l-2 border-gray-200 pl-4' : 'border-l-4 border-gray-200 pl-3'} mb-4">
+                        ${section.name ? `<h4 class="font-medium text-gray-700 mb-2 ${level === 0 ? 'text-base' : 'text-sm'}">${section.name}</h4>` : ''}
+                        <div class="space-y-3">
+                            ${Object.entries(section.sections).map(([subKey, subSection]) => 
+                                renderSection(subSection, `${sectionKey}_${subKey}`, level + 1)
+                            ).join('')}
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Hat direkte Items
+                return `
+                    <div class="${level > 0 ? 'ml-4' : 'border-l-4 border-gray-200 pl-3'} mb-3">
+                        ${section.name ? `<h4 class="font-medium text-gray-700 mb-2 ${level === 0 ? 'text-base' : 'text-sm'}">${section.name}</h4>` : ''}
+                        <div class="space-y-1">
+                            ${section.items ? section.items.map(item => `
+                                <div class="flex items-center gap-2 text-sm">
+                                    <div class="w-4 h-4 border border-gray-300 rounded flex items-center justify-center text-xs cursor-pointer hover:bg-gray-100" onclick="toggleProgressItem(this)">
+                                        ${Math.random() > 0.7 ? '✓' : ''}
+                                    </div>
+                                    <span class="text-gray-600">${item}</span>
+                                </div>
+                            `).join('') : ''}
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Gesamtanzahl Items rekursiv zählen
+        function countTotalItems(sections) {
+            let total = 0;
+            Object.values(sections).forEach(section => {
+                if (section.sections) {
+                    total += countTotalItems(section.sections);
+                } else if (section.items) {
+                    total += section.items.length;
+                }
+            });
+            return total;
+        }
+
+        // Progress Item togglen
+        function toggleProgressItem(element) {
+            if (element.textContent.trim() === '✓') {
+                element.textContent = '';
+                element.classList.remove('bg-green-100', 'text-green-600');
+            } else {
+                element.textContent = '✓';
+                element.classList.add('bg-green-100', 'text-green-600');
+            }
         }
 
         // ==================== EVENT HANDLERS ====================
