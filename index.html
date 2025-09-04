@@ -1653,7 +1653,15 @@
             if (!student) return;
             
             const updatedFahrten = [...student[category]];
-            updatedFahrten[index] = !updatedFahrten[index];
+            
+            // Wenn es eine Übungsfahrt ist und bereits completed ist, dann löschen
+            if ((category === 'uebungsfahrten_ganz' || category === 'uebungsfahrten_halb') && updatedFahrten[index]) {
+                // Löschen statt toggle
+                updatedFahrten.splice(index, 1);
+            } else {
+                // Normales Toggle für Pflichtfahrten oder leere Übungsfahrten
+                updatedFahrten[index] = !updatedFahrten[index];
+            }
             
             const updatedStudent = {
                 ...student,
@@ -1662,13 +1670,18 @@
             
             StorageManager.updateStudent(updatedStudent);
             
-            // Nur den Button aktualisieren - KEIN BLINKEN!
-            const button = document.querySelector(`button[data-category="${category}"][data-index="${index}"]`);
-            if (button) {
-                if (updatedFahrten[index]) {
-                    button.className = 'fahrt-btn completed';
-                } else {
-                    button.className = 'fahrt-btn incomplete';
+            // Bereich neu rendern für Übungsfahrten, nur Button updaten für Pflichtfahrten
+            if (category === 'uebungsfahrten_ganz' || category === 'uebungsfahrten_halb') {
+                renderStudentDetail(studentId);
+            } else {
+                // Nur den Button aktualisieren - KEIN BLINKEN!
+                const button = document.querySelector(`button[data-category="${category}"][data-index="${index}"]`);
+                if (button) {
+                    if (updatedFahrten[index]) {
+                        button.className = 'fahrt-btn completed';
+                    } else {
+                        button.className = 'fahrt-btn incomplete';
+                    }
                 }
             }
         }
