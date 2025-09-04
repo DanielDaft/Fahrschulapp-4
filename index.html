@@ -1457,17 +1457,17 @@
                         </div>` : ''}
                         ${student.theory_exam_date ? `<div class="info-item">
                             <div class="info-icon">📝</div>
-                            <div class="info-text">Theorieprüfung: ${formatGermanDate(student.theory_exam_date)} ${student.theory_exam_passed ? '✅ Bestanden' : '❌ Nicht bestanden'}</div>
+                            <div class="info-text">Theorieprüfung: ${formatGermanDate(student.theory_exam_date)}${student.theory_exam_passed ? ' <span style="color: #22c55e; font-weight: 600;">✅ Bestanden</span>' : ''}</div>
                         </div>` : (student.theory_exam_passed ? `<div class="info-item">
                             <div class="info-icon">📝</div>
-                            <div class="info-text">Theorieprüfung: ✅ Bestanden</div>
+                            <div class="info-text">Theorieprüfung: <span style="color: #22c55e; font-weight: 600;">✅ Bestanden</span></div>
                         </div>` : '')}
                         ${student.practical_exam_date ? `<div class="info-item">
                             <div class="info-icon">🚗</div>
-                            <div class="info-text">Praktische Prüfung: ${formatGermanDate(student.practical_exam_date)} ${student.practical_exam_passed ? '✅ Bestanden' : '❌ Nicht bestanden'}</div>
+                            <div class="info-text">Praktische Prüfung: ${formatGermanDate(student.practical_exam_date)}${student.practical_exam_passed ? ' <span style="color: #22c55e; font-weight: 600;">✅ Bestanden</span>' : ''}</div>
                         </div>` : (student.practical_exam_passed ? `<div class="info-item">
                             <div class="info-icon">🚗</div>
-                            <div class="info-text">Praktische Prüfung: ✅ Bestanden</div>
+                            <div class="info-text">Praktische Prüfung: <span style="color: #22c55e; font-weight: 600;">✅ Bestanden</span></div>
                         </div>` : '')}
                     </div>
                 </div>
