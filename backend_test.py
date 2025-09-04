@@ -513,7 +513,8 @@ class BackendTester:
                 )
                 if response.status_code == 200:
                     updated_student = response.json()
-                    ganz_count = len(updated_student['uebungsfahrten_ganz'])
+                    ganz_array = updated_student['uebungsfahrten_ganz'] or []
+                    ganz_count = len(ganz_array)
                     if ganz_count == i + 1:
                         self.log_test(f"Add Full Hour #{i+1}", True, f"Successfully added full hour, total: {ganz_count}")
                     else:
