@@ -734,7 +734,7 @@ async def get_student_overall_progress(student_id: str):
 
 # Practice Hours Management Routes
 @api_router.post("/students/{student_id}/practice-hours")
-async def add_practice_hour(student_id: str, hour_type: str, duration: float):
+async def add_practice_hour(student_id: str, hour_type: str = None, duration: float = None):
     """Add a practice hour to a student (0.5 or 1.0 hours)"""
     try:
         if hour_type not in ["ganz", "halb"] or duration not in [0.5, 1.0]:
@@ -768,7 +768,7 @@ async def add_practice_hour(student_id: str, hour_type: str, duration: float):
         raise HTTPException(status_code=500, detail=f"Error adding practice hour: {str(e)}")
 
 @api_router.delete("/students/{student_id}/practice-hours")
-async def remove_practice_hour(student_id: str, hour_type: str, index: int):
+async def remove_practice_hour(student_id: str, hour_type: str = None, index: int = None):
     """Remove a practice hour from a student"""
     try:
         if hour_type not in ["ganz", "halb"]:
