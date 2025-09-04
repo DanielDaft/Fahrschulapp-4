@@ -2006,6 +2006,13 @@
             const surname = document.getElementById('edit-surname').value.trim();
             const phone = document.getElementById('edit-phone').value.trim();
             const address = document.getElementById('edit-address').value.trim();
+            const dateBirth = document.getElementById('edit-birth').value;
+            const startDate = document.getElementById('edit-start').value;
+            const wearsGlasses = document.getElementById('edit-glasses').checked;
+            const theoryExamDate = document.getElementById('edit-theory-date').value;
+            const theoryExamPassed = document.getElementById('edit-theory-passed').checked;
+            const practicalExamDate = document.getElementById('edit-practical-date').value;
+            const practicalExamPassed = document.getElementById('edit-practical-passed').checked;
             
             if (!name || !surname) {
                 alert('❌ Vor- und Nachname sind erforderlich!');
@@ -2019,6 +2026,13 @@
                 surname,
                 phone: phone || null,
                 address: address || null,
+                date_of_birth: dateBirth || null,
+                start_date: startDate || student.start_date,
+                wears_glasses: wearsGlasses,
+                theory_exam_date: theoryExamDate || null,
+                theory_exam_passed: theoryExamPassed,
+                practical_exam_date: practicalExamDate || null,
+                practical_exam_passed: practicalExamPassed,
                 updated_at: new Date().toISOString()
             };
             
