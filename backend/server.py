@@ -851,13 +851,12 @@ async def get_student_progress_stats(student_id: str):
                         completed_items[progress['status']] += 1
                         
                         # Add weighted score based on completion level
-                        if progress['status'] == 'once':
-                            weighted_score += 25  # 25% weight for first completion
-                        elif progress['status'] == 'twice':
-                            weighted_score += 50  # 50% weight for second completion
-                        elif progress['status'] == 'thrice':
-                            weighted_score += 75  # 75% weight for third completion
-                        # Note: 'completed' status would get 100% but it seems not used in current system
+                        if progress['status'] == 'once':           # / = kleinste Gewichtung
+                            weighted_score += 25  # 25% weight
+                        elif progress['status'] == 'twice':        # × = mittlere Gewichtung
+                            weighted_score += 60  # 60% weight  
+                        elif progress['status'] == 'thrice':       # ⊗ = größte Gewichtung (Kreis mit X)
+                            weighted_score += 100  # 100% weight
             
             total_completed = sum(completed_items.values())
             # Use weighted percentage instead of simple completion
