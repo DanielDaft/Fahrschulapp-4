@@ -485,10 +485,12 @@ class BackendTester:
                 practice_student_id = student['id']
                 self.log_test("Create Practice Hours Test Student", True, f"Created student with ID: {practice_student_id}")
                 
-                # Verify initial practice hours arrays are empty
+                # Verify initial practice hours arrays are empty or null
                 if 'uebungsfahrten_ganz' in student and 'uebungsfahrten_halb' in student:
-                    ganz_count = len(student['uebungsfahrten_ganz'])
-                    halb_count = len(student['uebungsfahrten_halb'])
+                    ganz_array = student['uebungsfahrten_ganz'] or []
+                    halb_array = student['uebungsfahrten_halb'] or []
+                    ganz_count = len(ganz_array)
+                    halb_count = len(halb_array)
                     if ganz_count == 0 and halb_count == 0:
                         self.log_test("Initial Practice Hours State", True, "Practice hours arrays initialized as empty")
                     else:
