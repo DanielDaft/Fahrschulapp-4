@@ -11,5 +11,9 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@capacitor/ios": "^7.4.3",
+    "@capacitor/preferences": "^7.0.2"
+  }
 }
