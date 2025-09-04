@@ -1,19 +1,28 @@
 {
-  "name": "app",
+  "name": "deutsche-fahrschul-app",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Native iOS-App für deutsche Fahrschule mit komplettem Ausbildungsbaum",
+  "main": "www/index.html",
   "directories": {
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "echo 'Web assets ready'",
+    "ios:build": "npx cap copy ios && npx cap sync ios",
+    "ios:open": "npx cap open ios",
+    "serve": "npx serve www",
+    "capacitor:sync": "npx cap sync",
+    "capacitor:copy": "npx cap copy"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["fahrschule", "driving", "education", "ios", "capacitor"],
+  "author": "Deutsche Fahrschul-App Team",
+  "license": "MIT",
   "dependencies": {
-    "@capacitor/ios": "^7.4.3",
-    "@capacitor/preferences": "^7.0.2"
+    "@capacitor/core": "^6.1.2",
+    "@capacitor/ios": "^6.1.2",
+    "@capacitor/preferences": "^6.0.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.1.2"
   }
 }
