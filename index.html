@@ -54,7 +54,7 @@
         }
         
         .btn {
-            background: #2563eb;
+            background: #3b82f6;
             color: white;
             padding: 8px 16px;
             border: none;
@@ -63,6 +63,11 @@
             cursor: pointer;
             min-height: 44px;
             min-width: 44px;
+            transition: background-color 0.2s;
+        }
+        
+        .btn:hover {
+            background: #2563eb;
         }
         
         .btn:active {
@@ -82,7 +87,11 @@
             padding: 20px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .student-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
         
         .student-card:active {
@@ -105,7 +114,7 @@
         .avatar {
             width: 40px;
             height: 40px;
-            background: #dbeafe;
+            background: #e0f2fe;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -135,11 +144,11 @@
         }
         
         .progress-percent.good {
-            color: #16a34a;
+            color: #059669;
         }
         
         .progress-percent.medium {
-            color: #ea580c;
+            color: #d97706;
         }
         
         .progress-label {
@@ -164,11 +173,11 @@
         }
         
         .progress-fill.good {
-            background: #22c55e;
+            background: #10b981;
         }
         
         .progress-fill.medium {
-            background: #f97316;
+            background: #f59e0b;
         }
         
         .stats-grid {
@@ -220,6 +229,11 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .back-btn:hover {
+            background: #e5e7eb;
         }
         
         .detail-content {
@@ -318,7 +332,7 @@
         }
         
         .fahrt-btn.completed {
-            background: #16a34a;
+            background: #22c55e;
             color: white;
         }
         
@@ -328,14 +342,14 @@
         }
         
         .fahrt-btn.add {
-            background: #2563eb;
+            background: #3b82f6;
             color: white;
             font-size: 18px;
             font-weight: bold;
         }
         
         .training-info {
-            background: #dbeafe;
+            background: #eff6ff;
             border-radius: 8px;
             padding: 12px;
             margin-bottom: 16px;
@@ -357,26 +371,32 @@
         
         .category-header {
             padding: 16px;
-            background: #2563eb;
-            color: white;
+            background: #3b82f6;
+            color: #1f2937;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: background-color 0.2s;
         }
         
+        .category-header:hover {
+            filter: brightness(1.05);
+        }
+        
+        /* DEZENTERE FARBEN - bessere Lesbarkeit */
         .category-header.grundstufe {
-            background: linear-gradient(135deg, #fef3c7, #fbbf24);
+            background: linear-gradient(135deg, #fef3c7, #fcd34d);
             color: #92400e;
         }
         
         .category-header.aufbaustufe {
-            background: linear-gradient(135deg, #fed7aa, #fb923c);
+            background: linear-gradient(135deg, #fed7d7, #fb923c);
             color: #9a3412;
         }
         
         .category-header.leistungsstufe {
-            background: linear-gradient(135deg, #fca5a5, #f87171);
+            background: linear-gradient(135deg, #fecaca, #f87171);
             color: #991b1b;
         }
         
@@ -387,7 +407,7 @@
         
         .category-subtitle {
             font-size: 14px;
-            opacity: 0.9;
+            opacity: 0.8;
         }
         
         .category-progress {
@@ -401,12 +421,12 @@
         
         .category-items {
             font-size: 12px;
-            opacity: 0.9;
+            opacity: 0.8;
         }
         
         .category-bar {
             height: 8px;
-            background: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.3);
             border-radius: 4px;
             margin-top: 8px;
             overflow: hidden;
@@ -414,7 +434,7 @@
         
         .category-bar-fill {
             height: 100%;
-            background: white;
+            background: rgba(255,255,255,0.8);
             border-radius: 4px;
             transition: width 0.5s ease;
         }
@@ -469,26 +489,33 @@
             transition: all 0.2s;
             font-size: 14px;
             font-weight: bold;
+            background: white;
+        }
+        
+        .progress-checkbox:hover {
+            border-color: #9ca3af;
+            transform: scale(1.05);
         }
         
         .progress-checkbox:active {
             transform: scale(0.95);
         }
         
+        /* DEZENTERE FARBEN für Checkboxen */
         .progress-checkbox.once {
-            background: #fef3c7;
+            background: #fefce8;
             color: #a16207;
-            border-color: #fbbf24;
+            border-color: #eab308;
         }
         
         .progress-checkbox.twice {
-            background: #e0e7ff;
-            color: #6366f1;
-            border-color: #818cf8;
+            background: #f0f9ff;
+            color: #0369a1;
+            border-color: #0ea5e9;
         }
         
         .progress-checkbox.thrice {
-            background: #dcfce7;
+            background: #f0fdf4;
             color: #15803d;
             border-color: #22c55e;
         }
@@ -545,7 +572,7 @@
             margin-bottom: 4px;
         }
         
-        /* Dialog Styles */
+        /* Dialog Styles - Neuer Fahrschüler */
         .dialog-overlay {
             position: fixed;
             top: 0;
@@ -567,11 +594,13 @@
             width: 90%;
             max-height: 80vh;
             overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
         }
         
         .dialog h2 {
             margin-bottom: 20px;
             color: #1f2937;
+            font-size: 20px;
         }
         
         .form-group {
@@ -580,48 +609,62 @@
         
         .form-group label {
             display: block;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             font-weight: 500;
             color: #374151;
+            font-size: 14px;
         }
         
         .form-group input {
             width: 100%;
-            padding: 8px 12px;
+            padding: 10px 12px;
             border: 2px solid #e5e7eb;
             border-radius: 8px;
             font-size: 16px;
+            transition: border-color 0.2s;
         }
         
         .form-group input:focus {
             outline: none;
-            border-color: #2563eb;
+            border-color: #3b82f6;
         }
         
         .dialog-buttons {
             display: flex;
             gap: 12px;
-            margin-top: 20px;
+            margin-top: 24px;
         }
         
         .btn-secondary {
             background: #f3f4f6;
             color: #374151;
-            padding: 8px 16px;
+            padding: 10px 20px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             flex: 1;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        
+        .btn-secondary:hover {
+            background: #e5e7eb;
         }
         
         .btn-primary {
-            background: #2563eb;
+            background: #3b82f6;
             color: white;
-            padding: 8px 16px;
+            padding: 10px 20px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             flex: 1;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        
+        .btn-primary:hover {
+            background: #2563eb;
         }
         
         /* Responsive */
@@ -652,7 +695,7 @@
         <div id="loading" class="loading">
             <div class="spinner"></div>
             <div class="loading-title">Deutsche Fahrschul-App wird geladen...</div>
-            <div class="loading-subtitle">Vollständiger Ausbildungsbaum inkludiert</div>
+            <div class="loading-subtitle">Verbesserte Version mit dezenten Farben</div>
         </div>
         
         <!-- Main Content -->
@@ -777,12 +820,12 @@
         // Storage Manager
         const StorageManager = {
             getStudents: () => {
-                const stored = localStorage.getItem('fahrschul_students');
+                const stored = localStorage.getItem('fahrschul_students_v3');
                 return stored ? JSON.parse(stored) : [];
             },
             
             saveStudents: (students) => {
-                localStorage.setItem('fahrschul_students', JSON.stringify(students));
+                localStorage.setItem('fahrschul_students_v3', JSON.stringify(students));
             },
             
             getStudentById: (id) => {
@@ -802,16 +845,16 @@
             },
             
             getProgressForStudent: (studentId) => {
-                const stored = localStorage.getItem('fahrschul_progress');
+                const stored = localStorage.getItem('fahrschul_progress_v3');
                 const allProgress = stored ? JSON.parse(stored) : {};
                 return allProgress[studentId] || {};
             },
             
             saveProgressForStudent: (studentId, progress) => {
-                const stored = localStorage.getItem('fahrschul_progress');
+                const stored = localStorage.getItem('fahrschul_progress_v3');
                 const allProgress = stored ? JSON.parse(stored) : {};
                 allProgress[studentId] = progress;
-                localStorage.setItem('fahrschul_progress', JSON.stringify(allProgress));
+                localStorage.setItem('fahrschul_progress_v3', JSON.stringify(allProgress));
             },
             
             initDemoData: () => {
@@ -866,7 +909,7 @@
                     <div class="header">
                         <div>
                             <h1>🚗 Deutsche Fahrschul-App</h1>
-                            <p>Offline iOS-Version mit komplettem Ausbildungsbaum</p>
+                            <p>Verbesserte Version mit dezenten Farben</p>
                         </div>
                         <button class="btn" onclick="showNewStudentDialog()">
                             + Neu
@@ -929,6 +972,7 @@
                         <p>📋 Vollständiger Ausbildungsbaum implementiert</p>
                         <p>🔄 Gewichtete Fortschrittsverfolgung: / (25%) • × (60%) • ⊗ (100%)</p>
                         <p>💾 Alle Daten werden lokal gespeichert</p>
+                        <p>✨ Verbesserte Version: Dezente Farben, kein Blinken, neue Schüler</p>
                     </div>
                 </div>
             `;
@@ -1005,13 +1049,14 @@
                         <div class="fahrt-title">${title}</div>
                         <div class="fahrt-badge">${percentage}% (${completed}/${total})</div>
                     </div>
-                    <div class="fahrt-buttons">
+                    <div class="fahrt-buttons" id="buttons-${category}">
             `;
             
             fahrten.forEach((completed, index) => {
                 html += `
                     <button class="fahrt-btn ${completed ? 'completed' : 'incomplete'}" 
-                            onclick="toggleFahrt('${student.id}', '${category}', ${index})">
+                            onclick="toggleFahrt('${student.id}', '${category}', ${index})"
+                            data-category="${category}" data-index="${index}">
                         ${index + 1}
                     </button>
                 `;
@@ -1076,12 +1121,12 @@
                                 ${category.subtitle ? `<div class="category-subtitle">${category.subtitle}</div>` : ''}
                             </div>
                             <div class="category-progress">
-                                <div class="category-percentage">${percentage}%</div>
+                                <div class="category-percentage" id="progress-${key}">${percentage}%</div>
                                 <div class="category-items">${totalItems} Items</div>
                             </div>
                         </div>
                         <div class="category-bar">
-                            <div class="category-bar-fill" style="width: ${percentage}%"></div>
+                            <div class="category-bar-fill" id="bar-${key}" style="width: ${percentage}%"></div>
                         </div>
                         
                         <div id="section-${key}" class="category-content ${expanded ? 'expanded' : ''}">
@@ -1096,7 +1141,8 @@
                                             return `
                                                 <div class="progress-item">
                                                     <div class="progress-checkbox ${statusClass}" 
-                                                         onclick="toggleProgressItem('${student.id}', '${key}', '${item}')">
+                                                         onclick="toggleProgressItem('${student.id}', '${key}', '${item}', event)"
+                                                         data-category="${key}" data-item="${item}">
                                                         ${symbol}
                                                     </div>
                                                     <span class="progress-text">${item}</span>
@@ -1130,7 +1176,7 @@
             return statusCycle[(currentIndex + 1) % statusCycle.length];
         }
 
-        // Event Handlers
+        // Event Handlers (OHNE BLINKEN - optimiert)
         function openStudentDetail(studentId) {
             renderStudentDetail(studentId);
         }
@@ -1149,8 +1195,15 @@
             
             StorageManager.updateStudent(updatedStudent);
             
-            // Nur den Button-Bereich aktualisieren, nicht die ganze Seite
-            updateFahrtButtons(studentId, category);
+            // Nur den einen Button aktualisieren - KEIN BLINKEN!
+            const button = document.querySelector(`button[data-category="${category}"][data-index="${index}"]`);
+            if (button) {
+                if (updatedFahrten[index]) {
+                    button.className = 'fahrt-btn completed';
+                } else {
+                    button.className = 'fahrt-btn incomplete';
+                }
+            }
         }
 
         function addFahrt(studentId, category) {
@@ -1164,15 +1217,32 @@
             };
             
             StorageManager.updateStudent(updatedStudent);
-            renderStudentDetail(studentId);
+            
+            // Nur den Fahrt-Bereich neu rendern
+            const buttonsContainer = document.getElementById(`buttons-${category}`);
+            if (buttonsContainer) {
+                const newIndex = updatedFahrten.length - 1;
+                const addButton = buttonsContainer.querySelector('.add');
+                
+                const newButton = document.createElement('button');
+                newButton.className = 'fahrt-btn incomplete';
+                newButton.onclick = () => toggleFahrt(studentId, category, newIndex);
+                newButton.setAttribute('data-category', category);
+                newButton.setAttribute('data-index', newIndex);
+                newButton.textContent = newIndex + 1;
+                
+                buttonsContainer.insertBefore(newButton, addButton);
+            }
         }
 
         function toggleTrainingSection(sectionId) {
             const section = document.getElementById(`section-${sectionId}`);
-            section.classList.toggle('expanded');
+            if (section) {
+                section.classList.toggle('expanded');
+            }
         }
 
-        function toggleProgressItem(studentId, categoryKey, itemKey) {
+        function toggleProgressItem(studentId, categoryKey, itemKey, event) {
             const progress = StorageManager.getProgressForStudent(studentId);
             if (!progress[categoryKey]) progress[categoryKey] = {};
             
@@ -1182,10 +1252,43 @@
             progress[categoryKey][itemKey] = nextStatus;
             StorageManager.saveProgressForStudent(studentId, progress);
             
-            // Nur das angeklickte Element aktualisieren
-            updateProgressCheckbox(event.target, nextStatus);
+            // Nur das angeklickte Element aktualisieren - KEIN BLINKEN!
+            const element = event.target;
+            const symbol = getStatusSymbol(nextStatus);
+            const statusClass = nextStatus !== 'not_started' ? nextStatus : '';
+            
+            element.textContent = symbol;
+            element.className = `progress-checkbox ${statusClass}`;
+            
             // Fortschrittsbalken der Kategorie aktualisieren
             updateCategoryProgress(categoryKey, studentId);
+        }
+
+        function updateCategoryProgress(categoryKey, studentId) {
+            const category = TRAINING_CATEGORIES[categoryKey];
+            if (!category) return;
+            
+            const progress = StorageManager.getProgressForStudent(studentId);
+            const categoryProgress = progress[categoryKey] || {};
+            
+            let weightedScore = 0;
+            const totalItems = category.items.length;
+            
+            category.items.forEach(item => {
+                const status = categoryProgress[item];
+                if (status === 'once') weightedScore += 25;
+                else if (status === 'twice') weightedScore += 60;
+                else if (status === 'thrice') weightedScore += 100;
+            });
+            
+            const percentage = totalItems > 0 ? Math.round((weightedScore / (totalItems * 100)) * 100) : 0;
+            
+            // Fortschrittsbalken aktualisieren - OHNE komplette Seiten-Neuladung
+            const progressBar = document.getElementById(`bar-${categoryKey}`);
+            const progressText = document.getElementById(`progress-${categoryKey}`);
+            
+            if (progressBar) progressBar.style.width = `${percentage}%`;
+            if (progressText) progressText.textContent = `${percentage}%`;
         }
 
         // Neuer Fahrschüler Dialog
@@ -1227,11 +1330,18 @@
             `;
             
             document.body.appendChild(dialog);
+            
+            // Focus auf erstes Eingabefeld
+            setTimeout(() => {
+                document.getElementById('new-name').focus();
+            }, 100);
         }
 
         function closeNewStudentDialog() {
             const dialog = document.querySelector('.dialog-overlay');
-            if (dialog) dialog.remove();
+            if (dialog) {
+                dialog.remove();
+            }
         }
 
         function createNewStudent() {
@@ -1244,7 +1354,7 @@
             }
             
             const newStudent = {
-                id: 'student-' + Date.now(),
+                id: 'student-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
                 name: name,
                 surname: surname,
                 date_of_birth: document.getElementById('new-birth').value || null,
@@ -1274,66 +1384,12 @@
             
             // Erfolgsmeldung
             setTimeout(() => {
-                alert(`${name} ${surname} wurde erfolgreich hinzugefügt!`);
+                alert(`✅ ${name} ${surname} wurde erfolgreich hinzugefügt!`);
             }, 100);
         }
 
         function showAlert(message) {
             alert(message);
-        }
-
-        // Optimierte Aktualisierungsfunktionen (ohne Blinken)
-        function updateFahrtButtons(studentId, category) {
-            const student = StorageManager.getStudentById(studentId);
-            if (!student) return;
-            
-            const fahrten = student[category] || [];
-            const buttons = document.querySelectorAll(`button[onclick*="${category}"]`);
-            
-            buttons.forEach((button, index) => {
-                if (index < fahrten.length && button.textContent == (index + 1)) {
-                    if (fahrten[index]) {
-                        button.className = 'fahrt-btn completed';
-                    } else {
-                        button.className = 'fahrt-btn incomplete';
-                    }
-                }
-            });
-        }
-
-        function updateProgressCheckbox(element, status) {
-            const symbol = getStatusSymbol(status);
-            const statusClass = status !== 'not_started' ? status : '';
-            
-            element.textContent = symbol;
-            element.className = `progress-checkbox ${statusClass}`;
-        }
-
-        function updateCategoryProgress(categoryKey, studentId) {
-            const category = TRAINING_CATEGORIES[categoryKey];
-            if (!category) return;
-            
-            const progress = StorageManager.getProgressForStudent(studentId);
-            const categoryProgress = progress[categoryKey] || {};
-            
-            let weightedScore = 0;
-            const totalItems = category.items.length;
-            
-            category.items.forEach(item => {
-                const status = categoryProgress[item];
-                if (status === 'once') weightedScore += 25;
-                else if (status === 'twice') weightedScore += 60;
-                else if (status === 'thrice') weightedScore += 100;
-            });
-            
-            const percentage = totalItems > 0 ? Math.round((weightedScore / (totalItems * 100)) * 100) : 0;
-            
-            // Fortschrittsbalken aktualisieren
-            const progressBar = document.querySelector(`#section-${categoryKey}`).parentElement.querySelector('.category-bar-fill');
-            const progressText = document.querySelector(`#section-${categoryKey}`).parentElement.querySelector('.category-percentage');
-            
-            if (progressBar) progressBar.style.width = `${percentage}%`;
-            if (progressText) progressText.textContent = `${percentage}%`;
         }
 
         // App Initialization
@@ -1352,6 +1408,7 @@
                 // Student List anzeigen
                 renderStudentList();
                 console.log('✅ App erfolgreich gestartet!');
+                console.log('✨ Verbesserungen: Dezente Farben, kein Blinken, neue Schüler');
                 
             } catch (error) {
                 console.error('❌ Fehler beim Initialisieren:', error);
