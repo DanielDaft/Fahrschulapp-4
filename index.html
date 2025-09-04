@@ -1443,6 +1443,10 @@
                             <div class="info-icon">📍</div>
                             <div class="info-text">Adresse: ${student.address}</div>
                         </div>` : ''}
+                        ${student.date_of_birth ? `<div class="info-item">
+                            <div class="info-icon">🎂</div>
+                            <div class="info-text">Geburtsdatum: ${formatGermanDate(student.date_of_birth)}</div>
+                        </div>` : ''}
                         <div class="info-item">
                             <div class="info-icon">📅</div>
                             <div class="info-text">Ausbildungsbeginn: ${formatGermanDate(student.start_date)}</div>
@@ -1451,6 +1455,20 @@
                             <div class="info-icon">👓</div>
                             <div class="info-text">${student.wears_glasses ? 'Brillenträger' : 'Kein Brillenträger'}</div>
                         </div>` : ''}
+                        ${student.theory_exam_date ? `<div class="info-item">
+                            <div class="info-icon">📝</div>
+                            <div class="info-text">Theorieprüfung: ${formatGermanDate(student.theory_exam_date)} ${student.theory_exam_passed ? '✅ Bestanden' : '❌ Nicht bestanden'}</div>
+                        </div>` : (student.theory_exam_passed ? `<div class="info-item">
+                            <div class="info-icon">📝</div>
+                            <div class="info-text">Theorieprüfung: ✅ Bestanden</div>
+                        </div>` : '')}
+                        ${student.practical_exam_date ? `<div class="info-item">
+                            <div class="info-icon">🚗</div>
+                            <div class="info-text">Praktische Prüfung: ${formatGermanDate(student.practical_exam_date)} ${student.practical_exam_passed ? '✅ Bestanden' : '❌ Nicht bestanden'}</div>
+                        </div>` : (student.practical_exam_passed ? `<div class="info-item">
+                            <div class="info-icon">🚗</div>
+                            <div class="info-text">Praktische Prüfung: ✅ Bestanden</div>
+                        </div>` : '')}
                     </div>
                 </div>
             `;
