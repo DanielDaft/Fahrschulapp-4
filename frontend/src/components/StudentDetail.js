@@ -281,7 +281,56 @@ const StudentDetail = ({ student, onBack, onEdit }) => {
             <div className="md:col-span-2">
               <h3 className="font-medium text-gray-700 mb-2">Übungsfahrten</h3>
               
-              {/* Ganze Stunden - Always show */}
+              {/* TESTING: ADD BUTTONS ALWAYS VISIBLE */}
+              <div className="mb-4 p-4 bg-yellow-100 border border-yellow-400">
+                <p className="text-sm text-yellow-800 mb-2">TEST: + Buttons:</p>
+                <div className="flex gap-4">
+                  <div 
+                    style={{
+                      backgroundColor: '#1E40AF', 
+                      border: '4px solid #1E3A8A', 
+                      borderRadius: '50%', 
+                      width: '50px', 
+                      height: '50px', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center', 
+                      color: 'white', 
+                      fontSize: '30px', 
+                      fontWeight: 'bold', 
+                      cursor: 'pointer', 
+                      boxShadow: '0 4px 8px rgba(0,0,0,0.5)'
+                    }} 
+                    onClick={() => addUebungsfahrt('uebungsfahrten_ganz', 1.0)}
+                    title="TEST: Ganze Stunde hinzufügen"
+                  >
+                    +
+                  </div>
+                  <div 
+                    style={{
+                      backgroundColor: '#059669', 
+                      border: '4px solid #065F46', 
+                      borderRadius: '50%', 
+                      width: '50px', 
+                      height: '50px', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center', 
+                      color: 'white', 
+                      fontSize: '30px', 
+                      fontWeight: 'bold', 
+                      cursor: 'pointer', 
+                      boxShadow: '0 4px 8px rgba(0,0,0,0.5)'
+                    }} 
+                    onClick={() => addUebungsfahrt('uebungsfahrten_halb', 0.5)}
+                    title="TEST: Halbe Stunde hinzufügen"
+                  >
+                    +
+                  </div>
+                </div>
+              </div>
+              
+              {/* Original structure */}
               <div className="mb-3">
                 <h4 className="text-sm text-gray-600 mb-2">Ganze Stunden</h4>
                 <div className="flex gap-2 flex-wrap">
@@ -307,20 +356,12 @@ const StudentDetail = ({ student, onBack, onEdit }) => {
                       </button>
                     </div>
                   ))}
-                  
-                  {/* ADD BUTTON - BIG AND OBVIOUS */}
-                  <div style={{backgroundColor: '#1E40AF', border: '4px solid #1E3A8A', borderRadius: '50%', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '24px', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 8px rgba(0,0,0,0.3)'}} 
-                       onClick={() => addUebungsfahrt('uebungsfahrten_ganz', 1.0)}
-                       title="Ganze Stunde hinzufügen">
-                    +
-                  </div>
                 </div>
                 <span className="ml-2 text-sm text-gray-600">
                   ({(studentData.uebungsfahrten_ganz || []).filter(Boolean).length}/{(studentData.uebungsfahrten_ganz || []).length})
                 </span>
               </div>
               
-              {/* Halbe Stunden - Always show */}
               <div>
                 <h4 className="text-sm text-gray-600 mb-2">Halbe Stunden</h4>
                 <div className="flex gap-2 flex-wrap">
@@ -346,13 +387,6 @@ const StudentDetail = ({ student, onBack, onEdit }) => {
                       </button>
                     </div>
                   ))}
-                  
-                  {/* ADD BUTTON - BIG AND OBVIOUS */}
-                  <div style={{backgroundColor: '#059669', border: '4px solid #065F46', borderRadius: '50%', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '24px', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 8px rgba(0,0,0,0.3)'}} 
-                       onClick={() => addUebungsfahrt('uebungsfahrten_halb', 0.5)}
-                       title="Halbe Stunde hinzufügen">
-                    +
-                  </div>
                 </div>
                 <span className="ml-2 text-sm text-gray-600">
                   ({(studentData.uebungsfahrten_halb || []).filter(Boolean).length}/{(studentData.uebungsfahrten_halb || []).length})
