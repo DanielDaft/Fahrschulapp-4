@@ -153,7 +153,7 @@ const StudentDetail = ({ student, onBack, onEdit }) => {
           )}
           <div className="flex items-center gap-2 text-gray-600">
             <Calendar size={16} />
-            <span>Ausbildungsbeginn: {new Date(studentData.start_date).toLocaleDateString('de-DE')}</span>
+            <span>Ausbildungsbeginn: {formatGermanDate(studentData.start_date)}</span>
           </div>
           
           {/* Brillenträger Status */}
