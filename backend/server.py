@@ -661,6 +661,16 @@ async def get_training_categories():
                     "items": ["Lüftung", "Beleuchtung", "Scheibenwischer/-wascher", "Regen, Sprühnebel", "Wasserlachen, Aquaplaning", "Wind, Sturm, Böen", "Schnee und Matsch", "Eis"]
                 }
             }
+        },
+        "fahrerassistenzsysteme": {
+            "name": "Fahrerassistenzsysteme",
+            "color": "#60A5FA",
+            "sections": {
+                "bedienung": {
+                    "name": "Bedienung der Fahrerassistenzsysteme",
+                    "items": ["Bedienung der Fahrerassistenzsysteme"]
+                }
+            }
         }
     }
 
