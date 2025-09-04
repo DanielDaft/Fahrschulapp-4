@@ -45,17 +45,14 @@ const StudentDetail = ({ student, onBack, onEdit }) => {
     }
   };
 
-  const addUebungsfahrt = async (category) => {
+  const addUebungsfahrt = async (category, duration) => {
     try {
-      const updatedFahrten = [...(studentData[category] || []), false];
-      const updateData = { [category]: updatedFahrten };
+      const hourType = category === 'uebungsfahrten_ganz' ? 'ganz' : 'halb';
+      await axios.post(`${API}/students/${studentData.id}/practice-hours?hour_type=${hourType}&duration=${duration}`);
       
-      await axios.put(`${API}/students/${studentData.id}/fahrten`, updateData);
-      
-      setStudentData(prev => ({
-        ...prev,
-        [category]: updatedFahrten
-      }));
+      // Refresh student data
+      const response = await axios.get(`${API}/students/${studentData.id}`);
+      setStudentData(response.data);
     } catch (error) {
       console.error('Error adding übungsfahrt:', error);
     }
@@ -63,17 +60,12 @@ const StudentDetail = ({ student, onBack, onEdit }) => {
 
   const removeUebungsfahrt = async (category, index) => {
     try {
-      if (studentData[category].length <= 1) return; // Mindestens eine behalten
+      const hourType = category === 'uebungsfahrten_ganz' ? 'ganz' : 'halb';
+      await axios.delete(`${API}/students/${studentData.id}/practice-hours?hour_type=${hourType}&index=${index}`);
       
-      const updatedFahrten = studentData[category].filter((_, i) => i !== index);
-      const updateData = { [category]: updatedFahrten };
-      
-      await axios.put(`${API}/students/${studentData.id}/fahrten`, updateData);
-      
-      setStudentData(prev => ({
-        ...prev,
-        [category]: updatedFahrten
-      }));
+      // Refresh student data
+      const response = await axios.get(`${API}/students/${studentData.id}`);
+      setStudentData(response.data);
     } catch (error) {
       console.error('Error removing übungsfahrt:', error);
     }
