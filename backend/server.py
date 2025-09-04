@@ -732,6 +732,79 @@ async def get_student_overall_progress(student_id: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error calculating overall progress: {str(e)}")
 
+# Practice Hours Management Routes
+@api_router.post("/students/{student_id}/practice-hours")
+async def add_practice_hour(student_id: str, hour_type: str, duration: float):
+    """Add a practice hour to a student (0.5 or 1.0 hours)"""
+    try:
+        if hour_type not in ["ganz", "halb"] or duration not in [0.5, 1.0]:
+            raise HTTPException(status_code=400, detail="Invalid hour type or duration")
+        
+        # Get current student data
+        student = await db.students.find_one({"id": student_id})
+        if not student:
+            raise HTTPException(status_code=404, detail="Student not found")
+        
+        # Determine which array to update
+        field_name = f"uebungsfahrten_{hour_type}"
+        current_array = student.get(field_name, [])
+        
+        # Add new hour (True value)
+        updated_array = current_array + [True]
+        
+        # Update student
+        result = await db.students.update_one(
+            {"id": student_id},
+            {"$set": {field_name: updated_array}}
+        )
+        
+        if result.modified_count:
+            updated_student = await db.students.find_one({"id": student_id})
+            return Student(**updated_student)
+        
+        raise HTTPException(status_code=400, detail="Failed to add practice hour")
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error adding practice hour: {str(e)}")
+
+@api_router.delete("/students/{student_id}/practice-hours")
+async def remove_practice_hour(student_id: str, hour_type: str, index: int):
+    """Remove a practice hour from a student"""
+    try:
+        if hour_type not in ["ganz", "halb"]:
+            raise HTTPException(status_code=400, detail="Invalid hour type")
+        
+        # Get current student data
+        student = await db.students.find_one({"id": student_id})
+        if not student:
+            raise HTTPException(status_code=404, detail="Student not found")
+        
+        # Determine which array to update
+        field_name = f"uebungsfahrten_{hour_type}"
+        current_array = student.get(field_name, [])
+        
+        # Check if index is valid
+        if index < 0 or index >= len(current_array):
+            raise HTTPException(status_code=400, detail="Invalid index")
+        
+        # Remove hour at index
+        updated_array = current_array[:index] + current_array[index+1:]
+        
+        # Update student
+        result = await db.students.update_one(
+            {"id": student_id},
+            {"$set": {field_name: updated_array}}
+        )
+        
+        if result.modified_count:
+            updated_student = await db.students.find_one({"id": student_id})
+            return Student(**updated_student)
+        
+        raise HTTPException(status_code=400, detail="Failed to remove practice hour")
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error removing practice hour: {str(e)}")
+
 # Progress Statistics Route
 @api_router.get("/students/{student_id}/progress-stats")
 async def get_student_progress_stats(student_id: str):
