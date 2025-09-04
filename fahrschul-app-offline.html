@@ -1069,7 +1069,9 @@
             };
             
             StorageManager.updateStudent(updatedStudent);
-            renderStudentDetail(studentId);
+            
+            // Nur den Button-Bereich aktualisieren, nicht die ganze Seite
+            updateFahrtButtons(studentId, category);
         }
 
         function addFahrt(studentId, category) {
