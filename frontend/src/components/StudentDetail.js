@@ -272,107 +272,80 @@ const StudentDetail = ({ student, onBack, onEdit }) => {
             {(studentData.uebungsfahrten_ganz || studentData.uebungsfahrten_halb) && (
               <div className="md:col-span-2">
                 <h3 className="font-medium text-gray-700 mb-2">Übungsfahrten</h3>
-                {/* Ganze Stunden */}
-                {(studentData.uebungsfahrten_ganz || []).length > 0 && (
-                  <div className="mb-3">
-                    <h4 className="text-sm text-gray-600 mb-2">Ganze Stunden</h4>
-                    <div className="flex gap-2 flex-wrap">
-                      {(studentData.uebungsfahrten_ganz || []).map((completed, index) => (
-                        <div key={index} className="relative group">
-                          <button
-                            onClick={() => updateFahrt('uebungsfahrten_ganz', index)}
-                            className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors cursor-pointer hover:scale-110 ${
-                              completed
-                                ? 'bg-green-500 text-white hover:bg-green-600'
-                                : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
-                            }`}
-                            title={`Ganze Übungsstunde ${index + 1} ${completed ? 'abgeschlossen' : 'nicht abgeschlossen'} - Klicken zum Ändern`}
-                          >
-                            {index + 1}
-                          </button>
-                          <button
-                            onClick={() => removeUebungsfahrt('uebungsfahrten_ganz', index)}
-                            className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white rounded-full text-xs opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 flex items-center justify-center"
-                            title="Entfernen"
-                          >
-                            ×
-                          </button>
-                        </div>
-                      ))}
-                      <button
-                        onClick={() => addUebungsfahrt('uebungsfahrten_ganz', 1.0)}
-                        className="w-8 h-8 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors flex items-center justify-center font-bold text-lg"
-                        title="Ganze Stunde hinzufügen"
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                )}
                 
-                {/* Halbe Stunden */}
-                {(studentData.uebungsfahrten_halb || []).length > 0 && (
-                  <div>
-                    <h4 className="text-sm text-gray-600 mb-2">Halbe Stunden</h4>
-                    <div className="flex gap-2 flex-wrap">
-                      {(studentData.uebungsfahrten_halb || []).map((completed, index) => (
-                        <div key={index} className="relative group">
-                          <button
-                            onClick={() => updateFahrt('uebungsfahrten_halb', index)}
-                            className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors cursor-pointer hover:scale-110 ${
-                              completed
-                                ? 'bg-green-500 text-white hover:bg-green-600'
-                                : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
-                            }`}
-                            title={`Halbe Übungsstunde ${index + 1} ${completed ? 'abgeschlossen' : 'nicht abgeschlossen'} - Klicken zum Ändern`}
-                          >
-                            {index + 1}
-                          </button>
-                          <button
-                            onClick={() => removeUebungsfahrt('uebungsfahrten_halb', index)}
-                            className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white rounded-full text-xs opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 flex items-center justify-center"
-                            title="Entfernen"
-                          >
-                            ×
-                          </button>
-                        </div>
-                      ))}
-                      <button
-                        onClick={() => addUebungsfahrt('uebungsfahrten_halb', 0.5)}
-                        className="w-8 h-8 rounded-full bg-green-500 text-white hover:bg-green-600 transition-colors flex items-center justify-center font-bold text-lg"
-                        title="Halbe Stunde hinzufügen"
-                      >
-                        +
-                      </button>
-                    </div>
+                {/* Ganze Stunden - Always show if data exists */}
+                <div className="mb-3">
+                  <h4 className="text-sm text-gray-600 mb-2">Ganze Stunden</h4>
+                  <div className="flex gap-2 flex-wrap">
+                    {(studentData.uebungsfahrten_ganz || []).map((completed, index) => (
+                      <div key={index} className="relative group">
+                        <button
+                          onClick={() => updateFahrt('uebungsfahrten_ganz', index)}
+                          className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors cursor-pointer hover:scale-110 ${
+                            completed
+                              ? 'bg-green-500 text-white hover:bg-green-600'
+                              : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                          }`}
+                          title={`Ganze Übungsstunde ${index + 1} ${completed ? 'abgeschlossen' : 'nicht abgeschlossen'} - Klicken zum Ändern`}
+                        >
+                          {index + 1}
+                        </button>
+                        <button
+                          onClick={() => removeUebungsfahrt('uebungsfahrten_ganz', index)}
+                          className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white rounded-full text-xs opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 flex items-center justify-center"
+                          title="Entfernen"
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                    {/* ALWAYS show + button */}
+                    <button
+                      onClick={() => addUebungsfahrt('uebungsfahrten_ganz', 1.0)}
+                      className="w-8 h-8 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors flex items-center justify-center font-bold text-lg"
+                      title="Ganze Stunde hinzufügen"
+                    >
+                      +
+                    </button>
                   </div>
-                )}
-
-                {/* Falls keine Übungsstunden vorhanden, zeige Add-Buttons */}
-                {((studentData.uebungsfahrten_ganz || []).length === 0 && (studentData.uebungsfahrten_halb || []).length === 0) && (
-                  <div className="flex gap-4">
-                    <div>
-                      <h4 className="text-sm text-gray-600 mb-2">Ganze Stunden</h4>
-                      <button
-                        onClick={() => addUebungsfahrt('uebungsfahrten_ganz', 1.0)}
-                        className="w-8 h-8 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors flex items-center justify-center font-bold text-lg"
-                        title="Erste ganze Stunde hinzufügen"
-                      >
-                        +
-                      </button>
-                    </div>
-                    <div>
-                      <h4 className="text-sm text-gray-600 mb-2">Halbe Stunden</h4>
-                      <button
-                        onClick={() => addUebungsfahrt('uebungsfahrten_halb', 0.5)}
-                        className="w-8 h-8 rounded-full bg-green-500 text-white hover:bg-green-600 transition-colors flex items-center justify-center font-bold text-lg"
-                        title="Erste halbe Stunde hinzufügen"
-                      >
-                        +
-                      </button>
-                    </div>
+                </div>
+                
+                {/* Halbe Stunden - Always show if data exists */}
+                <div>
+                  <h4 className="text-sm text-gray-600 mb-2">Halbe Stunden</h4>
+                  <div className="flex gap-2 flex-wrap">
+                    {(studentData.uebungsfahrten_halb || []).map((completed, index) => (
+                      <div key={index} className="relative group">
+                        <button
+                          onClick={() => updateFahrt('uebungsfahrten_halb', index)}
+                          className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors cursor-pointer hover:scale-110 ${
+                            completed
+                              ? 'bg-green-500 text-white hover:bg-green-600'
+                              : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                          }`}
+                          title={`Halbe Übungsstunde ${index + 1} ${completed ? 'abgeschlossen' : 'nicht abgeschlossen'} - Klicken zum Ändern`}
+                        >
+                          {index + 1}
+                        </button>
+                        <button
+                          onClick={() => removeUebungsfahrt('uebungsfahrten_halb', index)}
+                          className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white rounded-full text-xs opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 flex items-center justify-center"
+                          title="Entfernen"
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                    {/* ALWAYS show + button */}
+                    <button
+                      onClick={() => addUebungsfahrt('uebungsfahrten_halb', 0.5)}
+                      className="w-8 h-8 rounded-full bg-green-500 text-white hover:bg-green-600 transition-colors flex items-center justify-center font-bold text-lg"
+                      title="Halbe Stunde hinzufügen"
+                    >
+                      +
+                    </button>
                   </div>
-                )}
+                </div>
               </div>
             )}
           </div>
