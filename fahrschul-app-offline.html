@@ -1113,6 +1113,60 @@
             alert(message);
         }
 
+        // Optimierte Aktualisierungsfunktionen (ohne Blinken)
+        function updateFahrtButtons(studentId, category) {
+            const student = StorageManager.getStudentById(studentId);
+            if (!student) return;
+            
+            const fahrten = student[category] || [];
+            const buttons = document.querySelectorAll(`button[onclick*="${category}"]`);
+            
+            buttons.forEach((button, index) => {
+                if (index < fahrten.length && button.textContent == (index + 1)) {
+                    if (fahrten[index]) {
+                        button.className = 'fahrt-btn completed';
+                    } else {
+                        button.className = 'fahrt-btn incomplete';
+                    }
+                }
+            });
+        }
+
+        function updateProgressCheckbox(element, status) {
+            const symbol = getStatusSymbol(status);
+            const statusClass = status !== 'not_started' ? status : '';
+            
+            element.textContent = symbol;
+            element.className = `progress-checkbox ${statusClass}`;
+        }
+
+        function updateCategoryProgress(categoryKey, studentId) {
+            const category = TRAINING_CATEGORIES[categoryKey];
+            if (!category) return;
+            
+            const progress = StorageManager.getProgressForStudent(studentId);
+            const categoryProgress = progress[categoryKey] || {};
+            
+            let weightedScore = 0;
+            const totalItems = category.items.length;
+            
+            category.items.forEach(item => {
+                const status = categoryProgress[item];
+                if (status === 'once') weightedScore += 25;
+                else if (status === 'twice') weightedScore += 60;
+                else if (status === 'thrice') weightedScore += 100;
+            });
+            
+            const percentage = totalItems > 0 ? Math.round((weightedScore / (totalItems * 100)) * 100) : 0;
+            
+            // Fortschrittsbalken aktualisieren
+            const progressBar = document.querySelector(`#section-${categoryKey}`).parentElement.querySelector('.category-bar-fill');
+            const progressText = document.querySelector(`#section-${categoryKey}`).parentElement.querySelector('.category-percentage');
+            
+            if (progressBar) progressBar.style.width = `${percentage}%`;
+            if (progressText) progressText.textContent = `${percentage}%`;
+        }
+
         // App Initialization
         function initApp() {
             try {
